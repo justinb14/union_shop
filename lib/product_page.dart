@@ -19,7 +19,7 @@ class ProductPage extends StatelessWidget {
           children: [
             // Header
             Container(
-              height: 100,
+              height: 150, // Increased height to accommodate navigation
               color: Colors.white,
               child: Column(
                 children: [
@@ -29,7 +29,7 @@ class ProductPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT',
+                      'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
@@ -38,89 +38,157 @@ class ProductPage extends StatelessWidget {
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
+                      child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              navigateToHome(context);
-                            },
-                            child: Image.network(
-                              'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
-                              height: 18,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  width: 18,
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  navigateToHome(context);
+                                },
+                                child: Image.network(
+                                  'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
                                   height: 18,
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey),
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: Colors.grey[300],
+                                      width: 18,
+                                      height: 18,
+                                      child: const Center(
+                                        child: Icon(Icons.image_not_supported,
+                                            color: Colors.grey),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.search,
+                                      size: 18,
+                                      color: Colors.grey,
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 32,
+                                      minHeight: 32,
+                                    ),
+                                    onPressed: placeholderCallbackForButtons,
                                   ),
-                                );
-                              },
-                            ),
+                                  const Text(
+                                    'Search',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.person_outline,
+                                      size: 18,
+                                      color: Colors.grey,
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 32,
+                                      minHeight: 32,
+                                    ),
+                                    onPressed: placeholderCallbackForButtons,
+                                  ),
+                                  const Text(
+                                    'Account',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.shopping_bag_outlined,
+                                      size: 18,
+                                      color: Colors.grey,
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 32,
+                                      minHeight: 32,
+                                    ),
+                                    onPressed: placeholderCallbackForButtons,
+                                  ),
+                                  const Text(
+                                    'Bag',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          const Spacer(),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 600),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
+                          const SizedBox(height: 8),
+                          // Navigation bar
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                child: const Text(
+                                  'Home',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
                                 ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.person_outline,
-                                    size: 18,
-                                    color: Colors.grey,
+                              ),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                child: const Text(
+                                  'Shop',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
                                 ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.shopping_bag_outlined,
-                                    size: 18,
-                                    color: Colors.grey,
+                              ),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                child: const Text(
+                                  'The Print Shack',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
                                 ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 18,
-                                    color: Colors.grey,
+                              ),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                child: const Text(
+                                  'SALE!',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
                                 ),
-                              ],
-                            ),
+                              ),
+                              TextButton(
+                                onPressed: placeholderCallbackForButtons,
+                                child: const Text(
+                                  'About',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
