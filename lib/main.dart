@@ -366,24 +366,27 @@ class HomeScreen extends StatelessWidget {
                           MediaQuery.of(context).size.width > 600 ? 3 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 24,
-                      children: const [
-                        ProductCard(
-                          title: 'Portsmouth Postcard',
+                      children: [
+                        // Portsmouth City Postcard
+                        _HoverableProductCard(
+                          title: 'Portsmouth City Postcard',
                           price: '£6.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                          imageUrl: 'assets/images/p_postcard.png',
+                          onTap: () {}, // Add navigation if needed
                         ),
-                        ProductCard(
-                          title: 'Portsmouth Magnet',
+                        // Portsmouth City Bookmark
+                        _HoverableProductCard(
+                          title: 'Portsmouth City Bookmark',
                           price: '£4.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                          imageUrl: 'assets/images/p_bookmark.png',
+                          onTap: () {}, // Add navigation if needed
                         ),
-                        ProductCard(
-                          title: 'Portsmouth Badge',
-                          price: '£3.50',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        // Portsmouth City Notebook
+                        _HoverableProductCard(
+                          title: 'Portsmouth City Notebook',
+                          price: '£4.00',
+                          imageUrl: 'assets/images/p_notebook.png',
+                          onTap: () {}, // Add navigation if needed
                         ),
                       ],
                     ),
@@ -695,42 +698,27 @@ class PortsmouthCollectionPage extends StatelessWidget {
           crossAxisCount: crossCount,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          children: const [
-            ProductCard(
-              title: 'Portsmouth Postcard 1',
+          children: [
+            // Portsmouth City Postcard
+            _HoverableProductCard(
+              title: 'Portsmouth City Postcard',
               price: '£6.00',
-              imageUrl:
-                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+              imageUrl: 'assets/images/p_postcard.png',
+              onTap: () {}, // Add navigation if needed
             ),
-            ProductCard(
-              title: 'Portsmouth Magnet 1',
+            // Portsmouth City Bookmark
+            _HoverableProductCard(
+              title: 'Portsmouth City Bookmark',
               price: '£4.00',
-              imageUrl:
-                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+              imageUrl: 'assets/images/p_bookmark.png',
+              onTap: () {}, // Add navigation if needed
             ),
-            ProductCard(
-              title: 'Portsmouth Magnet 2',
+            // Portsmouth City Notebook
+            _HoverableProductCard(
+              title: 'Portsmouth City Notebook',
               price: '£4.00',
-              imageUrl:
-                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            ),
-            ProductCard(
-              title: 'Portsmouth Badge 1',
-              price: '£3.50',
-              imageUrl:
-                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            ),
-            ProductCard(
-              title: 'Portsmouth Postcard 2',
-              price: '£6.00',
-              imageUrl:
-                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            ),
-            ProductCard(
-              title: 'Portsmouth Bundle',
-              price: '£12.00',
-              imageUrl:
-                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+              imageUrl: 'assets/images/p_notebook.png',
+              onTap: () {}, // Add navigation if needed
             ),
           ],
         ),

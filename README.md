@@ -17,3 +17,4 @@ The union shop website is designed to be a replication the existing UPSU website
 -**Footer**: Displayed footer that shows the sites title and powered by shopify as well as social media links, refreshes the page when clicked. 
 -**Collection Page**: At time of writing one display page added for the navy hoodie, in this page users can adjust size and colour as well as quantity. 
 -**Functioning Hero Section**: Displayed Hero Section where users can press arrows to navigate through relevant tabs
+-**Dummy Product Pages**: Products in essential range and signature range now have their own page where users can accordingly adjust colour and size

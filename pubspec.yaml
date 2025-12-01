@@ -32,5 +32,9 @@ flutter:
     - assets/images/hoodie_green.png
     - assets/images/tee.png
     - assets/images/tee_navy.png
+    - assets/images/p_bookmark.png
+    - assets/images/p_postcard.png
+    - assets/images/p_magnet.png
+
 
   
