@@ -18,7 +18,10 @@ class UnionShopApp extends StatelessWidget {
       ),
       home: const HomeScreen(),
       initialRoute: '/',
-      routes: {'/product': (context) => const ProductPage()},
+      routes: {
+        '/product': (context) => const ProductPage(),
+        '/portsmouth': (context) => const PortsmouthCollectionPage(),
+      },
     );
   }
 }
@@ -55,7 +58,13 @@ class HomeScreen extends StatelessWidget {
                 child: const Text(
                   'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 13, // slightly smaller
+                    fontWeight: FontWeight.w700, // bolder / "fatter"
+                    height: 1.05, // a bit more compact vertically
+                    letterSpacing: 0.4, // slightly spaced
+                  ),
                 ),
               ),
               // Navigation row
@@ -86,15 +95,7 @@ class HomeScreen extends StatelessWidget {
                                 );
                               },
                             ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              'The Union',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF4d2963),
-                              ),
-                            ),
+                            // Text label removed — only the logo image is shown
                           ],
                         ),
                       ),
@@ -102,30 +103,32 @@ class HomeScreen extends StatelessWidget {
                       // Mini titles (nav links)
                       Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center, // center links between logo and icons
                           children: [
                             TextButton(
                               onPressed: () => navigateToHome(context),
                               child: const Text('Home',
                                   style: TextStyle(color: Colors.black)),
                             ),
+                            const SizedBox(width: 12),
                             TextButton(
                               onPressed: () => navigateToProduct(context),
                               child: const Text('Shop',
                                   style: TextStyle(color: Colors.black)),
                             ),
+                            const SizedBox(width: 12),
                             TextButton(
                               onPressed: placeholderCallbackForButtons,
                               child: const Text('The Print Shack',
                                   style: TextStyle(color: Colors.black)),
                             ),
+                            const SizedBox(width: 12),
                             TextButton(
                               onPressed: placeholderCallbackForButtons,
                               child: const Text('SALE!',
-                                  style: TextStyle(
-                                      color: Color(0xFFd32f2f),
-                                      fontWeight: FontWeight.bold)),
+                                  style: TextStyle(color: Colors.black)),
                             ),
+                            const SizedBox(width: 12),
                             TextButton(
                               onPressed: placeholderCallbackForButtons,
                               child: const Text('About',
@@ -141,52 +144,39 @@ class HomeScreen extends StatelessWidget {
                           IconButton(
                             icon: const Icon(
                               Icons.search,
-                              size: 18,
-                              color: Colors.grey,
+                              size: 26, // slightly larger
+                              color: Colors.black, // changed to black
                             ),
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(14), // larger tappable area
                             constraints: const BoxConstraints(
-                              minWidth: 32,
-                              minHeight: 32,
+                              minWidth: 48,
+                              minHeight: 48,
                             ),
                             onPressed: placeholderCallbackForButtons,
                           ),
                           IconButton(
                             icon: const Icon(
                               Icons.person_outline,
-                              size: 18,
-                              color: Colors.grey,
+                              size: 26,
+                              color: Colors.black,
                             ),
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(14),
                             constraints: const BoxConstraints(
-                              minWidth: 32,
-                              minHeight: 32,
+                              minWidth: 48,
+                              minHeight: 48,
                             ),
                             onPressed: placeholderCallbackForButtons,
                           ),
                           IconButton(
                             icon: const Icon(
                               Icons.shopping_bag_outlined,
-                              size: 18,
-                              color: Colors.grey,
+                              size: 26,
+                              color: Colors.black,
                             ),
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(14),
                             constraints: const BoxConstraints(
-                              minWidth: 32,
-                              minHeight: 32,
-                            ),
-                            onPressed: placeholderCallbackForButtons,
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.menu,
-                              size: 18,
-                              color: Colors.grey,
-                            ),
-                            padding: const EdgeInsets.all(8),
-                            constraints: const BoxConstraints(
-                              minWidth: 32,
-                              minHeight: 32,
+                              minWidth: 48,
+                              minHeight: 48,
                             ),
                             onPressed: placeholderCallbackForButtons,
                           ),
@@ -284,7 +274,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text(
-                      'PRODUCTS SECTION',
+                      'Essential Range - Over 20% off!',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -312,6 +302,26 @@ class HomeScreen extends StatelessWidget {
                           imageUrl:
                               'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 64),
+                    const Text(
+                      'Signature Range',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 48),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount:
+                          MediaQuery.of(context).size.width > 600 ? 2 : 1,
+                      crossAxisSpacing: 24,
+                      mainAxisSpacing: 48,
+                      children: const [
                         ProductCard(
                           title: 'Placeholder Product 3',
                           price: '£20.00',
@@ -325,6 +335,70 @@ class HomeScreen extends StatelessWidget {
                               'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 64),
+
+                    // New: Portsmouth City Collection
+                    const Text(
+                      'Portsmouth City Collection',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount:
+                          MediaQuery.of(context).size.width > 600 ? 3 : 1,
+                      crossAxisSpacing: 24,
+                      mainAxisSpacing: 24,
+                      children: const [
+                        ProductCard(
+                          title: 'Portsmouth Postcard',
+                          price: '£6.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                        ),
+                        ProductCard(
+                          title: 'Portsmouth Magnet',
+                          price: '£4.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        ),
+                        ProductCard(
+                          title: 'Portsmouth Badge',
+                          price: '£3.50',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 32),
+                    // View All button
+                    Center(
+                      child: SizedBox(
+                        height: 44,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/portsmouth');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4d2963), // purple
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                          ),
+                          child: const Text(
+                            'View All',
+                            style: TextStyle(fontSize: 16, letterSpacing: 0.5),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -404,6 +478,75 @@ class ProductCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class PortsmouthCollectionPage extends StatelessWidget {
+  const PortsmouthCollectionPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final crossCount = MediaQuery.of(context).size.width > 800
+        ? 3
+        : (MediaQuery.of(context).size.width > 600 ? 2 : 1);
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Color(0xFF4d2963)),
+        title: const Text(
+          'Portsmouth City Collection',
+          style: TextStyle(color: Color(0xFF4d2963)),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: GridView.count(
+          crossAxisCount: crossCount,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          children: const [
+            ProductCard(
+              title: 'Portsmouth Postcard 1',
+              price: '£6.00',
+              imageUrl:
+                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+            ),
+            ProductCard(
+              title: 'Portsmouth Magnet 1',
+              price: '£4.00',
+              imageUrl:
+                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+            ),
+            ProductCard(
+              title: 'Portsmouth Magnet 2',
+              price: '£4.00',
+              imageUrl:
+                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+            ),
+            ProductCard(
+              title: 'Portsmouth Badge 1',
+              price: '£3.50',
+              imageUrl:
+                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+            ),
+            ProductCard(
+              title: 'Portsmouth Postcard 2',
+              price: '£6.00',
+              imageUrl:
+                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+            ),
+            ProductCard(
+              title: 'Portsmouth Bundle',
+              price: '£12.00',
+              imageUrl:
+                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+            ),
+          ],
+        ),
       ),
     );
   }
