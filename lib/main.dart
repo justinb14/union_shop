@@ -53,17 +53,17 @@ class HomeScreen extends StatelessWidget {
               // Top sale banner
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 color: const Color(0xFF4d2963),
                 child: const Text(
                   'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 13, // slightly smaller
+                    fontSize: 16, // slightly bigger
                     fontWeight: FontWeight.w700, // bolder / "fatter"
-                    height: 1.05, // a bit more compact vertically
-                    letterSpacing: 0.4, // slightly spaced
+                    height: 1.1,
+                    letterSpacing: 2.0, // more spaced out
                   ),
                 ),
               ),
@@ -79,21 +79,24 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Image.network(
-                              'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
-                              height: 36,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  width: 36,
-                                  height: 36,
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey),
-                                  ),
-                                );
-                              },
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4.0), // move logo down
+                              child: Image.network(
+                                'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                                height: 36,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    width: 36,
+                                    height: 36,
+                                    child: const Center(
+                                      child: Icon(Icons.image_not_supported,
+                                          color: Colors.grey),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                             // Text label removed — only the logo image is shown
                           ],
@@ -138,49 +141,52 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       // Right-side icons (kept small)
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.search,
-                              size: 26, // slightly larger
-                              color: Colors.black, // changed to black
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0), // move icons down
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.search,
+                                size: 26,
+                                color: Colors.black,
+                              ),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: placeholderCallbackForButtons,
                             ),
-                            padding: const EdgeInsets.all(14), // larger tappable area
-                            constraints: const BoxConstraints(
-                              minWidth: 48,
-                              minHeight: 48,
+                            IconButton(
+                              icon: const Icon(
+                                Icons.person_outline,
+                                size: 26,
+                                color: Colors.black,
+                              ),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: placeholderCallbackForButtons,
                             ),
-                            onPressed: placeholderCallbackForButtons,
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.person_outline,
-                              size: 26,
-                              color: Colors.black,
+                            IconButton(
+                              icon: const Icon(
+                                Icons.shopping_bag_outlined,
+                                size: 26,
+                                color: Colors.black,
+                              ),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: placeholderCallbackForButtons,
                             ),
-                            padding: const EdgeInsets.all(14),
-                            constraints: const BoxConstraints(
-                              minWidth: 48,
-                              minHeight: 48,
-                            ),
-                            onPressed: placeholderCallbackForButtons,
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.shopping_bag_outlined,
-                              size: 26,
-                              color: Colors.black,
-                            ),
-                            padding: const EdgeInsets.all(14),
-                            constraints: const BoxConstraints(
-                              minWidth: 48,
-                              minHeight: 48,
-                            ),
-                            onPressed: placeholderCallbackForButtons,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -496,32 +502,32 @@ class _HeroCarouselState extends State<HeroCarousel> {
             bottom: 24,
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular(24),
+                  color: Colors.black.withOpacity(0.45), // transparent black
+                  borderRadius: BorderRadius.circular(32),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.arrow_left, size: 28),
-                      color: const Color(0xFF4d2963),
+                      color: Colors.grey[300], // grey arrow
                       onPressed: _prev,
                       splashRadius: 22,
                     ),
                     Row(
                       children: List.generate(_slides.length, (i) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Container(
-                            width: 10,
-                            height: 10,
+                            width: 22, // longer
+                            height: 7,  // shorter
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+                              borderRadius: BorderRadius.circular(8),
                               color: i == _currentIndex
-                                  ? const Color(0xFF4d2963)
-                                  : Colors.grey[400],
+                                  ? Colors.white // active: white
+                                  : Colors.grey[400], // inactive: grey
                             ),
                           ),
                         );
@@ -529,7 +535,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.arrow_right, size: 28),
-                      color: const Color(0xFF4d2963),
+                      color: Colors.grey[300], // grey arrow
                       onPressed: _next,
                       splashRadius: 22,
                     ),
