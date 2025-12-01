@@ -194,77 +194,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // Hero Section
-            SizedBox(
-              height: 400,
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  // Background image
-                  Positioned.fill(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.7),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Content overlay
-                  Positioned(
-                    left: 24,
-                    right: 24,
-                    top: 80,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Placeholder Hero Title',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            height: 1.2,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "This is placeholder text for the hero section.",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            height: 1.5,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 32),
-                        ElevatedButton(
-                          onPressed: placeholderCallbackForButtons,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                          ),
-                          child: const Text(
-                            'BROWSE PRODUCTS',
-                            style: TextStyle(fontSize: 14, letterSpacing: 1),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const HeroCarousel(),
 
             // Products Section
             Container(
@@ -421,6 +351,194 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HeroCarousel extends StatefulWidget {
+  const HeroCarousel({super.key});
+
+  @override
+  State<HeroCarousel> createState() => _HeroCarouselState();
+}
+
+class _HeroCarouselState extends State<HeroCarousel> {
+  int _currentIndex = 0;
+
+  final List<Map<String, String>> _slides = [
+    {
+      'image':
+          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+      'title': 'Essential Range - Over 20% Off!',
+      'subtitle':
+          'Over 20% off our Essential Range. Come and grab yours while stock lasts!',
+    },
+    {
+      'image':
+          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+      'title': 'Signature Range',
+      'subtitle': 'Discover our premium Signature Range products.',
+    },
+    {
+      'image':
+          'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+      'title': 'Portsmouth City Collection',
+      'subtitle': 'Explore the Portsmouth City Collection today.',
+    },
+    {
+      'image':
+          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+      'title': 'Student Essentials',
+      'subtitle': 'Everything you need for your student life.',
+    },
+  ];
+
+  void _goTo(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  void _next() {
+    setState(() {
+      _currentIndex = (_currentIndex + 1) % _slides.length;
+    });
+  }
+
+  void _prev() {
+    setState(() {
+      _currentIndex = (_currentIndex - 1 + _slides.length) % _slides.length;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final slide = _slides[_currentIndex];
+    return SizedBox(
+      height: 400,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          // Background image
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(slide['image']!),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                ),
+              ),
+            ),
+          ),
+          // Content overlay
+          Positioned(
+            left: 24,
+            right: 24,
+            top: 80,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  slide['title']!,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  slide['subtitle']!,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    height: 1.5,
+                    fontWeight: FontWeight.bold, // Make subtitle bold
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                SizedBox(
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF4d2963),
+                      foregroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                      ),
+                    ),
+                    child: const Text(
+                      'BROWSE PRODUCTS',
+                      style: TextStyle(
+                        fontSize: 14,
+                        letterSpacing: 1,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Carousel bar
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 24,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_left, size: 28),
+                      color: const Color(0xFF4d2963),
+                      onPressed: _prev,
+                      splashRadius: 22,
+                    ),
+                    Row(
+                      children: List.generate(_slides.length, (i) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 3),
+                          child: Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: i == _currentIndex
+                                  ? const Color(0xFF4d2963)
+                                  : Colors.grey[400],
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.arrow_right, size: 28),
+                      color: const Color(0xFF4d2963),
+                      onPressed: _next,
+                      splashRadius: 22,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
