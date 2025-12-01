@@ -21,6 +21,12 @@ class UnionShopApp extends StatelessWidget {
       routes: {
         '/product': (context) => const ProductPage(),
         '/portsmouth': (context) => const PortsmouthCollectionPage(),
+        '/about': (context) => const AboutPage(),
+        '/sale': (context) => const SalePage(),
+        '/sale_sweatshirt': (context) => const SaleSweatshirtPage(),
+        '/sale_notebook': (context) => const SaleNotebookPage(),
+        '/sale_usb': (context) => const SaleUSBPage(),
+        '/sale_fidget': (context) => const SaleFidgetPage(),
       },
     );
   }
@@ -48,11 +54,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  void navigateToAbout(BuildContext context) {
+    Navigator.pushNamed(context, '/about');
+  }
+
+  void navigateToSale(BuildContext context) {
+    Navigator.pushNamed(context, '/sale');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(96),
+        preferredSize: const Size.fromHeight(86), // reduced height
         child: Material(
           color: Colors.white,
           child: Column(
@@ -60,17 +74,17 @@ class HomeScreen extends StatelessWidget {
               // Top sale banner
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 6), // reduced padding
                 color: const Color(0xFF4d2963),
                 child: const Text(
                   'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14, // reduced to avoid overflow
-                    fontWeight: FontWeight.w700, // bolder / "fatter"
+                    fontSize: 11, // reduced font size
+                    fontWeight: FontWeight.w700,
                     height: 1.1,
-                    letterSpacing: 2.0, // more spaced out
+                    letterSpacing: 1.2, // slightly less spacing
                   ),
                 ),
               ),
@@ -134,13 +148,13 @@ class HomeScreen extends StatelessWidget {
                             ),
                             const SizedBox(width: 12),
                             TextButton(
-                              onPressed: placeholderCallbackForButtons,
+                              onPressed: () => navigateToSale(context),
                               child: const Text('SALE!',
                                   style: TextStyle(color: Colors.black)),
                             ),
                             const SizedBox(width: 12),
                             TextButton(
-                              onPressed: placeholderCallbackForButtons,
+                              onPressed: () => navigateToAbout(context),
                               child: const Text('About',
                                   style: TextStyle(color: Colors.black)),
                             ),
@@ -354,13 +368,52 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               color: Colors.grey[50],
               padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/facebook_logo.png',
+                        width: 38, // bigger size
+                        height: 38,
+                        fit: BoxFit.contain,
+                      ),
+                      const SizedBox(width: 16),
+                      Image.asset(
+                        'assets/images/twitter_logo.png',
+                        width: 28,
+                        height: 28,
+                        fit: BoxFit.contain,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () {
+                      // Refresh the page
+                      Navigator.pushReplacement(
+                        // ignore: use_build_context_synchronously
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (c, a1, a2) => const HomeScreen(),
+                          transitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      '© 2025, upsu-store Powered by Shopify',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        // Removed underline
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -780,7 +833,7 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
     // Use the same app bar and footer as HomeScreen
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(96),
+        preferredSize: const Size.fromHeight(86),
         child: Material(
           color: Colors.white,
           child: Column(
@@ -788,17 +841,17 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
               // Top sale banner
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 6),
                 color: const Color(0xFF4d2963),
                 child: const Text(
                   'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14,
+                    fontSize: 11,
                     fontWeight: FontWeight.w700,
                     height: 1.1,
-                    letterSpacing: 2.0,
+                    letterSpacing: 1.2,
                   ),
                 ),
               ),
@@ -1138,13 +1191,1108 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
         width: double.infinity,
         color: Colors.grey[50],
         padding: const EdgeInsets.all(24),
-        child: const Text(
-          'Placeholder Footer',
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/facebook_logo.png',
+                  width: 38, // bigger size
+                  height: 38,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(width: 16),
+                Image.asset(
+                  'assets/images/twitter_logo.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                // Refresh the page
+                Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const HomeScreen(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              },
+              child: const Text(
+                '© 2025, upsu-store Powered by Shopify',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  // Removed underline
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(86),
+        child: Material(
+          color: Colors.white,
+          child: Column(
+            children: [
+              // Top sale banner
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                color: const Color(0xFF4d2963),
+                child: const Text(
+                  'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    height: 1.1,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              // Navigation row (same as HomeScreen)
+              SizedBox(
+                height: 48,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (route) => false),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Image.network(
+                                'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                                height: 36,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    width: 36,
+                                    height: 36,
+                                    child: const Center(
+                                      child: Icon(Icons.image_not_supported,
+                                          color: Colors.grey),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                                  context, '/', (route) => false),
+                              child: const Text('Home',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/product'),
+                              child: const Text('Shop',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('The Print Shack',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('SALE!',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('About',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.search,
+                                size: 26,
+                                color: Colors.black,
+                              ),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.person_outline,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.shopping_bag_outlined,
+                                size: 26,
+                                color: Colors.black,
+                              ),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'About us',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            const Text(
+              "Welcome to the Union Shop!\n\n"
+              "We’re dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive personalisation service!\n\n"
+              "All online purchases are available for delivery or instore collection!\n\n"
+              "We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don’t hesitate to contact us at hello@upsu.net.\n\n"
+              "Happy shopping!\n\n"
+              "The Union Shop & Reception Team​​​​​​​​​",
+              style: TextStyle(
+                fontSize: 17,
+                color: Colors.black87,
+                height: 1.6,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        color: Colors.grey[50],
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/facebook_logo.png',
+                  width: 38,
+                  height: 38,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(width: 16),
+                Image.asset(
+                  'assets/images/twitter_logo.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                // Refresh the page
+                Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const HomeScreen(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              },
+              child: const Text(
+                '© 2025, upsu-store Powered by Shopify',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SalePage extends StatelessWidget {
+  const SalePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final saleProducts = [
+      {
+        'name': 'Essential Sweatshirt',
+        'image': 'assets/images/sweatshirt.png',
+        'oldPrice': '£28.00',
+        'newPrice': '£21.99',
+        'route': '/sale_sweatshirt',
+      },
+      {
+        'name': 'Portsmouth Notebook',
+        'image': 'assets/images/ports_notebook.png',
+        'oldPrice': '£7.00',
+        'newPrice': '£4.99',
+        'route': '/sale_notebook',
+      },
+      {
+        'name': 'USB Cable',
+        'image': 'assets/images/usb_cable.png',
+        'oldPrice': '£5.00',
+        'newPrice': '£2.99',
+        'route': '/sale_usb',
+      },
+      {
+        'name': 'Fidget Keyring',
+        'image': 'assets/images/fidget_keyring.png',
+        'oldPrice': '£3.00',
+        'newPrice': '£1.99',
+        'route': '/sale_fidget',
+      },
+    ];
+
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(86),
+        child: Material(
+          color: Colors.white,
+          child: Column(
+            children: [
+              // Top sale banner
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                color: const Color(0xFF4d2963),
+                child: const Text(
+                  'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    height: 1.1,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              // Navigation row (same as HomeScreen)
+              SizedBox(
+                height: 48,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (route) => false),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Image.network(
+                                'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                                height: 36,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    width: 36,
+                                    height: 36,
+                                    child: const Center(
+                                      child: Icon(Icons.image_not_supported,
+                                          color: Colors.grey),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                                  context, '/', (route) => false),
+                              child: const Text('Home',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/product'),
+                              child: const Text('Shop',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('The Print Shack',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () => Navigator.pushNamed(context, '/sale'),
+                              child: const Text('SALE!',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/about'),
+                              child: const Text('About',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.search,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.person_outline,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.shopping_bag_outlined,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title centered
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'Sale',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Description centered
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "Don’t miss out! Get yours before they’re all gone!\n\nAll prices shown are inclusive of the discount 🛒",
+                  style: TextStyle(
+                    fontSize: 17,
+                    color: Colors.black87,
+                    height: 1.6,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            // Sale products grid
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: MediaQuery.of(context).size.width > 800
+                    ? 4
+                    : (MediaQuery.of(context).size.width > 600 ? 2 : 1),
+                crossAxisSpacing: 24,
+                mainAxisSpacing: 32,
+                childAspectRatio: 0.7,
+                children: saleProducts.map((product) {
+                  return _SaleHoverableProductCard(
+                    title: product['name']!,
+                    imageUrl: product['image']!,
+                    oldPrice: product['oldPrice']!,
+                    newPrice: product['newPrice']!,
+                    onTap: () {
+                      Navigator.pushNamed(context, product['route']!);
+                    },
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        color: Colors.grey[50],
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/facebook_logo.png',
+                  width: 38,
+                  height: 38,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(width: 16),
+                Image.asset(
+                  'assets/images/twitter_logo.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const HomeScreen(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              },
+              child: const Text(
+                '© 2025, upsu-store Powered by Shopify',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// --- Sale Hoverable Product Card ---
+class _SaleHoverableProductCard extends StatefulWidget {
+  final String title;
+  final String imageUrl;
+  final String oldPrice;
+  final String newPrice;
+  final VoidCallback onTap;
+
+  const _SaleHoverableProductCard({
+    required this.title,
+    required this.imageUrl,
+    required this.oldPrice,
+    required this.newPrice,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_SaleHoverableProductCard> createState() => _SaleHoverableProductCardState();
+}
+
+class _SaleHoverableProductCardState extends State<_SaleHoverableProductCard> {
+  bool _hovering = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ColorFiltered(
+                colorFilter: _hovering
+                    ? const ColorFilter.mode(Colors.transparent, BlendMode.saturation)
+                    : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                child: Image.asset(
+                  widget.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+                decoration: _hovering ? TextDecoration.underline : TextDecoration.none,
+                decorationThickness: 2,
+              ),
+              maxLines: 2,
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Text(
+                  widget.oldPrice,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  widget.newPrice,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: Color(0xFF4d2963),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// --- Sale Product Pages (stubs, similar to Essential Hoodie) ---
+class SaleSweatshirtPage extends StatelessWidget {
+  const SaleSweatshirtPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return _SaleProductDetailPage(
+      title: 'Essential Sweatshirt',
+      image: 'assets/images/sweatshirt.png',
+      oldPrice: '£28.00',
+      newPrice: '£21.99',
+      description: 'Our classic Essential Sweatshirt, now at a special sale price!',
+    );
+  }
+}
+
+class SaleNotebookPage extends StatelessWidget {
+  const SaleNotebookPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return _SaleProductDetailPage(
+      title: 'Portsmouth Notebook',
+      image: 'assets/images/ports_notebook.png',
+      oldPrice: '£7.00',
+      newPrice: '£4.99',
+      description: 'Take notes in style with the Portsmouth Notebook.',
+    );
+  }
+}
+
+class SaleUSBPage extends StatelessWidget {
+  const SaleUSBPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return _SaleProductDetailPage(
+      title: 'USB Cable',
+      image: 'assets/images/usb_cable.png',
+      oldPrice: '£5.00',
+      newPrice: '£2.99',
+      description: 'Handy USB cable for all your charging needs.',
+    );
+  }
+}
+
+class SaleFidgetPage extends StatelessWidget {
+  const SaleFidgetPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return _SaleProductDetailPage(
+      title: 'Fidget Keyring',
+      image: 'assets/images/fidget_keyring.png',
+      oldPrice: '£3.00',
+      newPrice: '£1.99',
+      description: 'Keep your hands busy with this fun Fidget Keyring.',
+    );
+  }
+}
+
+// --- Sale Product Detail Page Widget ---
+class _SaleProductDetailPage extends StatefulWidget {
+  final String title;
+  final String image;
+  final String oldPrice;
+  final String newPrice;
+  final String description;
+
+  const _SaleProductDetailPage({
+    required this.title,
+    required this.image,
+    required this.oldPrice,
+    required this.newPrice,
+    required this.description,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<_SaleProductDetailPage> createState() => _SaleProductDetailPageState();
+}
+
+class _SaleProductDetailPageState extends State<_SaleProductDetailPage> {
+  bool _hovering = false;
+  int _quantity = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    final isWide = MediaQuery.of(context).size.width > 800;
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(86),
+        child: Material(
+          color: Colors.white,
+          child: Column(
+            children: [
+              // Top sale banner
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                color: const Color(0xFF4d2963),
+                child: const Text(
+                  'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    height: 1.1,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
+              // Navigation row (same as HomeScreen)
+              SizedBox(
+                height: 48,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamedAndRemoveUntil(
+                            context, '/', (route) => false),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4.0),
+                              child: Image.network(
+                                'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                                height: 36,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    width: 36,
+                                    height: 36,
+                                    child: const Center(
+                                      child: Icon(Icons.image_not_supported,
+                                          color: Colors.grey),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                                  context, '/', (route) => false),
+                              child: const Text('Home',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/product'),
+                              child: const Text('Shop',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text('The Print Shack',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () => Navigator.pushNamed(context, '/sale'),
+                              child: const Text('SALE!',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                            const SizedBox(width: 12),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/about'),
+                              child: const Text('About',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(
+                                Icons.search,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.person_outline,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.shopping_bag_outlined,
+                                size: 26,
+                                color: Colors.black),
+                              padding: const EdgeInsets.all(14),
+                              constraints: const BoxConstraints(
+                                minWidth: 48,
+                                minHeight: 48,
+                              ),
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+              child: Flex(
+                direction: isWide ? Axis.horizontal : Axis.vertical,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Image with hover saturation
+                  SizedBox(
+                    width: isWide ? 400 : double.infinity,
+                    height: isWide ? 480 : 340,
+                    child: MouseRegion(
+                      onEnter: (_) => setState(() => _hovering = true),
+                      onExit: (_) => setState(() => _hovering = false),
+                      child: ColorFiltered(
+                        colorFilter: _hovering
+                            ? const ColorFilter.mode(Colors.transparent, BlendMode.saturation)
+                            : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                        child: Image.asset(
+                          widget.image,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: isWide ? 48 : 0, height: isWide ? 0 : 32),
+                  // Product details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: isWide ? 24 : 8),
+                        Text(
+                          widget.title,
+                          style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          children: [
+                            Text(
+                              widget.oldPrice,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              widget.newPrice,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF4d2963),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          children: [
+                            const Text(
+                              'Quantity',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16),
+                            ),
+                            const SizedBox(width: 16),
+                            SizedBox(
+                              width: 60,
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 8),
+                                ),
+                                controller: TextEditingController(
+                                    text: _quantity.toString()),
+                                onChanged: (val) {
+                                  final n = int.tryParse(val);
+                                  if (n != null && n > 0) {
+                                    setState(() => _quantity = n);
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4d2963),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 32, vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                          ),
+                          child: const Text(
+                            'Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          widget.description,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        color: Colors.grey[50],
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/facebook_logo.png',
+                  width: 38,
+                  height: 38,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(width: 16),
+                Image.asset(
+                  'assets/images/twitter_logo.png',
+                  width: 28,
+                  height: 28,
+                  fit: BoxFit.contain,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (c, a1, a2) => const HomeScreen(),
+                    transitionDuration: Duration.zero,
+                  ),
+                );
+              },
+              child: const Text(
+                '© 2025, upsu-store Powered by Shopify',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

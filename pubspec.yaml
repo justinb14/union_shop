@@ -22,4 +22,10 @@ flutter:
 
   assets:
     - assets/images/hoodie_navy.png
+    - assets/images/twitter_logo.png
+    - assets/images/facebook_logo.png
+    - assets/images/fidget_keyring.png
+    - assets/images/usb_cable.png
+    - assets/images/sweatshirt.png
+    - assets/images/ports_notebook.png
   
