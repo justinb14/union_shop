@@ -13,7 +13,6 @@ import 'footer.dart';
 // Fix: Use relative import for product_card.dart
 import 'product_card.dart';
 import 'cart_model.dart'; // <-- Add this line
-import 'print_shack_page.dart'; // <-- Add this import
 //restored
 
 // --- Common Widgets for AppBar ---
@@ -143,11 +142,6 @@ class _NavBar extends StatelessWidget {
   void _navigate(String route) {
     if (route == '/') {
       Navigator.pushNamedAndRemoveUntil(parentContext, '/', (route) => false);
-    } else if (route == '/print_shack') {
-      Navigator.push(
-        parentContext,
-        MaterialPageRoute(builder: (context) => const PrintShackPage()),
-      );
     } else {
       Navigator.pushNamed(parentContext, route);
     }
@@ -203,26 +197,23 @@ class _NavBar extends StatelessWidget {
               // --- Replace 'The Print Shack' TextButton with PopupMenuButton ---
               PopupMenuButton<String>(
                 onSelected: (value) {
-                  if (value == 'about') {
-                    _navigate('/about');
+                  if (value == 'who') {
+                    Navigator.push(
+                      parentContext,
+                      MaterialPageRoute(builder: (context) => const PrintShackWhoAreWePage()),
+                    );
                   } else if (value == 'personalisation') {
                     _navigate('/personalisation');
-                  } else if (value == 'print_shack') {
-                    _navigate('/print_shack');
                   }
                 },
                 itemBuilder: (context) => [
                   const PopupMenuItem(
-                    value: 'about',
-                    child: Text('About'),
+                    value: 'who',
+                    child: Text('Who are we'), // <-- Changed label
                   ),
                   const PopupMenuItem(
                     value: 'personalisation',
                     child: Text('Personalisation'),
-                  ),
-                  const PopupMenuItem(
-                    value: 'print_shack',
-                    child: Text('The Print Shack'),
                   ),
                 ],
                 child: const Text(
@@ -326,8 +317,7 @@ class UnionShopApp extends StatelessWidget {
         '/p_bookmark': (context) => PortsmouthCityBookmarkPage(),
         '/p_notebook': (context) => const PortsmouthCityNotebookPage(),
         '/cart': (context) => CartPage(),
-        '/personalisation': (context) => const PersonalisationPage(),
-        '/print_shack': (context) => const PrintShackPage(), // <-- Add this route
+        '/personalisation': (context) => const PersonalisationPage(), // <-- Add this line
       },
     );
   }
@@ -1065,52 +1055,46 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          'About us',
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'About us', // <-- Changed heading
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 32),
-                    const Text(
-                      "Welcome to the Union Shop!\n\n"
-                      "We’re dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive personalisation service!\n\n"
-                      "All online purchases are available for delivery or instore collection!\n\n"
-                      "We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don’t hesitate to contact us at hello@upsu.net.\n\n"
-                      "Happy shopping!\n\n"
-                      "The Union Shop & Reception Team​​​​​​​​​",
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Colors.black87,
-                        height: 1.6,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(height: 32),
+              const Text(
+                "Welcome to the Union Shop!\n\n"
+                "We’re dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive personalisation service!\n\n"
+                "All online purchases are available for delivery or instore collection!\n\n"
+                "We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don’t hesitate to contact us at hello@upsu.net.\n\n"
+                "Happy shopping!\n\n"
+                "The Union Shop & Reception Team​​​​​​​​​",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black87,
+                  height: 1.6,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
-          buildShopFooter(context),
-        ],
+        ),
       ),
+      bottomNavigationBar: buildShopFooter(context),
     );
   }
 }
@@ -1448,73 +1432,65 @@ class PortsmouthCityPostcardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: Image.asset('assets/images/p_postcard.png', fit: BoxFit.contain),
-                      ),
-                      const SizedBox(height: 32),
-                      const Text(
-                        'Portsmouth City Postcard',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'A beautiful Portsmouth City Postcard, perfect for sending or collecting.',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        '£6.00',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
-                      ),
-                      const SizedBox(height: 24),
-                      SizedBox(
-                        width: 200,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Cart().addItem(CartItem(
-                              title: 'Portsmouth City Postcard',
-                              imageUrl: 'assets/images/p_postcard.png',
-                              price: 6.00,
-                              quantity: 1,
-                            ));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Added to cart!')),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
-                          child: const Text(
-                            'Add to Cart',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.asset('assets/images/p_postcard.png', fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Portsmouth City Postcard',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'A beautiful Portsmouth City Postcard, perfect for sending or collecting.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                '£6.00',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Cart().addItem(CartItem(
+                      title: 'Portsmouth City Postcard',
+                      imageUrl: 'assets/images/p_postcard.png',
+                      price: 6.00,
+                      quantity: 1,
+                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart!')),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-          buildShopFooter(context),
-        ],
+        ),
       ),
+      bottomNavigationBar: buildShopFooter(context),
     );
   }
 }
@@ -1525,73 +1501,65 @@ class PortsmouthCityBookmarkPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: Image.asset('assets/images/p_bookmark.png', fit: BoxFit.contain),
-                      ),
-                      const SizedBox(height: 32),
-                      const Text(
-                        'Portsmouth City Bookmark',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'A stylish Portsmouth City Bookmark for your favourite reads.',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        '£4.00',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
-                      ),
-                      const SizedBox(height: 24),
-                      SizedBox(
-                        width: 200,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Cart().addItem(CartItem(
-                              title: 'Portsmouth City Bookmark',
-                              imageUrl: 'assets/images/p_bookmark.png',
-                              price: 4.00,
-                              quantity: 1,
-                            ));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Added to cart!')),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
-                          child: const Text(
-                            'Add to Cart',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.asset('assets/images/p_bookmark.png', fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Portsmouth City Bookmark',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'A stylish Portsmouth City Bookmark for your favourite reads.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                '£4.00',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Cart().addItem(CartItem(
+                      title: 'Portsmouth City Bookmark',
+                      imageUrl: 'assets/images/p_bookmark.png',
+                      price: 4.00,
+                      quantity: 1,
+                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart!')),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-          buildShopFooter(context),
-        ],
+        ),
       ),
+      bottomNavigationBar: buildShopFooter(context),
     );
   }
 }
@@ -1602,73 +1570,65 @@ class PortsmouthCityNotebookPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 400,
-                        height: 400,
-                        child: Image.asset('assets/images/p_notebook.png', fit: BoxFit.contain),
-                      ),
-                      const SizedBox(height: 32),
-                      const Text(
-                        'Portsmouth City Notebook',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'A handy Portsmouth City Notebook for your notes and sketches.',
-                        style: TextStyle(fontSize: 16, color: Colors.black87),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      const Text(
-                        '£4.00',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
-                      ),
-                      const SizedBox(height: 24),
-                      SizedBox(
-                        width: 200,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Cart().addItem(CartItem(
-                              title: 'Portsmouth City Notebook',
-                              imageUrl: 'assets/images/p_notebook.png',
-                              price: 4.00,
-                              quantity: 1,
-                            ));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Added to cart!')),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
-                          child: const Text(
-                            'Add to Cart',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.asset('assets/images/p_notebook.png', fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Portsmouth City Notebook',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'A handy Portsmouth City Notebook for your notes and sketches.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                '£4.00',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Cart().addItem(CartItem(
+                      title: 'Portsmouth City Notebook',
+                      imageUrl: 'assets/images/p_notebook.png',
+                      price: 4.00,
+                      quantity: 1,
+                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart!')),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-          buildShopFooter(context),
-        ],
+        ),
       ),
+      bottomNavigationBar: buildShopFooter(context),
     );
   }
 }
@@ -1690,7 +1650,105 @@ class PersonalisationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: const Center(child: Text('Personalisation Page Placeholder')),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'The Union Print Shack', // <-- Changed heading
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                "Make It Yours at The Union Print Shack\n\n"
+                "Want to add a personal touch? We’ve got you covered with heat-pressed customisation on all our clothing. Swing by the shop - our team’s always happy to help you pick the right gear and answer any questions.\n\n"
+                "Uni Gear or Your Gear - We’ll Personalise It\n"
+                "Whether you’re repping your university or putting your own spin on a hoodie you already own, we’ve got you covered. We can personalise official uni-branded clothing and your own items - just bring them in and let’s get creative!\n\n"
+                "Simple Pricing, No Surprises\n"
+                "Customising your gear won’t break the bank - just £3 for one line of text or a small chest logo, and £5 for two lines or a large back logo. Turnaround time is up to three working days, and we’ll let you know as soon as it’s ready to collect.\n\n"
+                "Personalisation Terms & Conditions\n"
+                "We will print your clothing exactly as you have provided it to us, whether online or in person. We are not responsible for any spelling errors. Please ensure your chosen text is clearly displayed in either capitals or lowercase. Refunds are not provided for any personalised items.\n\n"
+                "Ready to Make It Yours?\n"
+                "Pop in or get in touch today - let’s create something uniquely you with our personalisation service - The Union Print Shack!",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black87,
+                  height: 1.6,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+// --- Print Shack Who are we page (separate from AboutPage) ---
+class PrintShackWhoAreWePage extends StatelessWidget {
+  const PrintShackWhoAreWePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    'The Union Print Shack', // <-- Title
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                "Make It Yours at The Union Print Shack\n"
+                "Want to add a personal touch? We’ve got you covered with heat-pressed customisation on all our clothing. Swing by the shop - our team’s always happy to help you pick the right gear and answer any questions.\n\n"
+                "Uni Gear or Your Gear - We’ll Personalise It\n"
+                "Whether you’re repping your university or putting your own spin on a hoodie you already own, we’ve got you covered. We can personalise official uni-branded clothing and your own items - just bring them in and let’s get creative!\n\n"
+                "Simple Pricing, No Surprises\n"
+                "Customising your gear won’t break the bank - just £3 for one line of text or a small chest logo, and £5 for two lines or a large back logo. Turnaround time is up to three working days, and we’ll let you know as soon as it’s ready to collect.\n\n"
+                "Personalisation Terms & Conditions\n"
+                "We will print your clothing exactly as you have provided it to us, whether online or in person. We are not responsible for any spelling errors. Please ensure your chosen text is clearly displayed in either capitals or lowercase. Refunds are not provided for any personalised items.\n\n"
+                "Ready to Make It Yours?\n"
+                "Pop in or get in touch today - let’s create something uniquely you with our personalisation service - The Union Print Shack!",
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.black87,
+                  height: 1.6,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: buildShopFooter(context),
     );
   }
