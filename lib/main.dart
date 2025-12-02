@@ -53,6 +53,87 @@ PreferredSizeWidget buildShopAppBar(BuildContext context) {
   );
 }
 
+void showProductSearchDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      String query = '';
+      List<Map<String, String>> allProducts = [
+        // Essential Range
+        {'name': 'Essential Hoodie', 'route': '/signature_hoodie', 'image': 'assets/images/hoodie_navy.png', 'price': '£29.99'},
+        {'name': 'Essential T-Shirt', 'route': '/essential_tshirt', 'image': 'assets/images/tee.png', 'price': '£6.99'},
+        // Signature Range
+        {'name': 'Signature Hoodie', 'route': '/signature_hoodie', 'image': 'assets/images/hoodie_green.png', 'price': '£32.99'},
+        {'name': 'Signature T-Shirt', 'route': '/signature_tshirt', 'image': 'assets/images/tee_navy.png', 'price': '£9.99'},
+        // Portsmouth City Collection
+        {'name': 'Portsmouth City Postcard', 'route': '/p_postcard', 'image': 'assets/images/p_postcard.png', 'price': '£6.00'},
+        {'name': 'Portsmouth City Bookmark', 'route': '/p_bookmark', 'image': 'assets/images/p_bookmark.png', 'price': '£4.00'},
+        {'name': 'Portsmouth City Notebook', 'route': '/p_notebook', 'image': 'assets/images/p_notebook.png', 'price': '£4.00'},
+        // Sale Page
+        {'name': 'Essential Sweatshirt', 'route': '/sale_sweatshirt', 'image': 'assets/images/sweatshirt.png', 'price': '£21.99'},
+        {'name': 'Portsmouth Notebook', 'route': '/sale_notebook', 'image': 'assets/images/ports_notebook.png', 'price': '£4.99'},
+        {'name': 'USB Cable', 'route': '/sale_usb', 'image': 'assets/images/usb_cable.png', 'price': '£2.99'},
+        {'name': 'Fidget Keyring', 'route': '/sale_fidget', 'image': 'assets/images/fidget_keyring.png', 'price': '£1.99'},
+      ];
+      List<Map<String, String>> results = allProducts;
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            title: const Text('Search Products'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: const InputDecoration(
+                    hintText: 'Type product name...',
+                  ),
+                  onChanged: (val) {
+                    setState(() {
+                      query = val;
+                      results = allProducts.where((p) =>
+                        p['name']!.toLowerCase().contains(query.toLowerCase())
+                      ).toList();
+                    });
+                  },
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 220,
+                  width: 350,
+                  child: results.isEmpty
+                    ? const Center(child: Text('No products found.'))
+                    : ListView.builder(
+                        itemCount: results.length,
+                        itemBuilder: (context, i) {
+                          final p = results[i];
+                          return ListTile(
+                            leading: Image.asset(p['image']!, width: 40, height: 40, fit: BoxFit.cover),
+                            title: Text(p['name']!),
+                            subtitle: Text(p['price']!),
+                            onTap: () {
+                              Navigator.pop(context);
+                              Navigator.pushNamed(context, p['route']!);
+                            },
+                          );
+                        },
+                      ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
 class _NavBar extends StatelessWidget {
   final BuildContext parentContext;
   const _NavBar(this.parentContext, {super.key});
@@ -138,51 +219,22 @@ class _NavBar extends StatelessWidget {
                 icon: const Icon(Icons.search, size: 26, color: Colors.black),
                 padding: const EdgeInsets.all(14),
                 constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-                onPressed: () {},
+                onPressed: () {
+                  showProductSearchDialog(context);
+                },
               ),
               // --- Shopping Cart Button (navigates to cart page) ---
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined, size: 26, color: Colors.black),
-                    padding: const EdgeInsets.all(14),
-                    constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CartPage()),
-                      );
-                    },
-                    tooltip: 'View Cart',
-                  ),
-                  // Cart bubble badge
-                  if (Cart().totalItems > 0)
-                    Positioned(
-                      right: 8,
-                      top: 8,
-                      child: Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 18,
-                          minHeight: 18,
-                        ),
-                        child: Text(
-                          '${Cart().totalItems}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                ],
+              IconButton(
+                icon: const Icon(Icons.shopping_cart_outlined, size: 26, color: Colors.black),
+                padding: const EdgeInsets.all(14),
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartPage()),
+                  );
+                },
+                tooltip: 'View Cart',
               ),
               IconButton(
                 icon: const Icon(Icons.person_outline, size: 26, color: Colors.black),

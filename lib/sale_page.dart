@@ -368,6 +368,7 @@ class SaleSweatshirtPage extends StatelessWidget {
       oldPrice: '£28.00',
       newPrice: '£21.99',
       description: 'Our classic Essential Sweatshirt, now at a special sale price!',
+    );
   }
 }
 

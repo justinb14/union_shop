@@ -39,5 +39,6 @@ class Cart {
   }
 
   double get totalPrice => _items.fold(0, (sum, item) => sum + item.price * item.quantity);
-  int get totalQuantity => _items.fold(0, (sum, item) => sum + item.quantity);
+
+  int get totalItems => items.fold(0, (sum, item) => sum + item.quantity);
 }
