@@ -13,6 +13,7 @@ import 'footer.dart';
 // Fix: Use relative import for product_card.dart
 import 'product_card.dart';
 import 'cart_model.dart'; // <-- Add this line
+//restored
 
 // --- Common Widgets for AppBar ---
 PreferredSizeWidget buildShopAppBar(BuildContext context) {
@@ -193,9 +194,36 @@ class _NavBar extends StatelessWidget {
                 child: const Text('Shop', style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 12),
-              TextButton(
-                onPressed: () {},
-                child: const Text('The Print Shack', style: TextStyle(color: Colors.black)),
+              // --- Replace 'The Print Shack' TextButton with PopupMenuButton ---
+              PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'about') {
+                    _navigate('/about');
+                  } else if (value == 'personalisation') {
+                    _navigate('/personalisation');
+                  }
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'about',
+                    child: Text('About'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'personalisation',
+                    child: Text('Personalisation'),
+                  ),
+                ],
+                child: const Text(
+                  'The Print Shack',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                offset: const Offset(0, 40),
+                color: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
               ),
               const SizedBox(width: 12),
               TextButton(
@@ -286,6 +314,7 @@ class UnionShopApp extends StatelessWidget {
         '/p_bookmark': (context) => PortsmouthCityBookmarkPage(),
         '/p_notebook': (context) => const PortsmouthCityNotebookPage(),
         '/cart': (context) => CartPage(),
+        '/personalisation': (context) => const PersonalisationPage(), // <-- Add this line
       },
     );
   }
@@ -1605,6 +1634,18 @@ class PortsmouthCollectionPage extends StatelessWidget {
     return Scaffold(
       appBar: buildShopAppBar(context),
       body: const Center(child: Text('Portsmouth Collection Page Placeholder')),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+class PersonalisationPage extends StatelessWidget {
+  const PersonalisationPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: const Center(child: Text('Personalisation Page Placeholder')),
       bottomNavigationBar: buildShopFooter(context),
     );
   }
