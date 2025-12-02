@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'footer.dart';
-import 'cart_model.dart';
 import 'main.dart'; // <-- Add this import for buildShopAppBar
+import 'cart_model.dart'; // Add this import for Cart
+import 'footer.dart';     // Add this import for buildShopFooter
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});

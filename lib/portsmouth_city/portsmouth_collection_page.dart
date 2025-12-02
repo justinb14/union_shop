@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../main.dart'; // For buildShopAppBar
-import '../footer.dart'; // For buildShopFooter
 import '../product_card.dart';
 
 class PortsmouthCollectionPage extends StatelessWidget {

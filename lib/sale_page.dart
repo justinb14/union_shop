@@ -114,159 +114,165 @@ class _SalePageState extends State<SalePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title centered
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'Sale',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            // Description centered
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  "Don’t miss out! Get yours before they’re all gone!\n\nAll prices shown are inclusive of the discount 🛒",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black87,
-                    height: 1.6,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            const SizedBox(height: 32),
-            // --- Filter and Sort Row ---
-            Row(
-              children: [
-                // Filter By
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Filter By',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(width: 8),
-                      DropdownButton<String>(
-                        value: _selectedFilter,
-                        items: _filterOptions
-                            .map((f) => DropdownMenuItem(
-                                  value: f,
-                                  child: Text(f),
-                                ))
-                            .toList(),
-                        onChanged: (val) {
-                          if (val != null) {
-                            setState(() {
-                              _selectedFilter = val;
-                            });
-                          }
-                        },
-                        underline: const SizedBox(),
-                        style: const TextStyle(color: Colors.black, fontSize: 15),
-                        borderRadius: BorderRadius.circular(4),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title centered
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Sale',
+                        style: TextStyle(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 16),
-                // Sort By
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Sort By',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(width: 8),
-                      DropdownButton<String>(
-                        value: _selectedSort,
-                        items: _sortOptions
-                            .map((s) => DropdownMenuItem(
-                                  value: s,
-                                  child: Text(s),
-                                ))
-                            .toList(),
-                        onChanged: (val) {
-                          if (val != null) {
-                            setState(() {
-                              _selectedSort = val;
-                            });
-                          }
-                        },
-                        underline: const SizedBox(),
-                        style: const TextStyle(color: Colors.black, fontSize: 15),
-                        borderRadius: BorderRadius.circular(4),
+                  const SizedBox(height: 16),
+                  // Description centered
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "Don’t miss out! Get yours before they’re all gone!\n\nAll prices shown are inclusive of the discount 🛒",
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black87,
+                          height: 1.6,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
-                ),
-                // Spacer
-                Expanded(child: Container()),
-                // Product count
-                Text(
-                  '${_sortedProducts.length} products',
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
+                  const SizedBox(height: 32),
+                  // --- Filter and Sort Row ---
+                  Row(
+                    children: [
+                      // Filter By
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Filter By',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(width: 8),
+                            DropdownButton<String>(
+                              value: _selectedFilter,
+                              items: _filterOptions
+                                  .map((f) => DropdownMenuItem(
+                                        value: f,
+                                        child: Text(f),
+                                      ))
+                                  .toList(),
+                              onChanged: (val) {
+                                if (val != null) {
+                                  setState(() {
+                                    _selectedFilter = val;
+                                  });
+                                }
+                              },
+                              underline: const SizedBox(),
+                              style: const TextStyle(color: Colors.black, fontSize: 15),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      // Sort By
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Sort By',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(width: 8),
+                            DropdownButton<String>(
+                              value: _selectedSort,
+                              items: _sortOptions
+                                  .map((s) => DropdownMenuItem(
+                                        value: s,
+                                        child: Text(s),
+                                      ))
+                                  .toList(),
+                              onChanged: (val) {
+                                if (val != null) {
+                                  setState(() {
+                                    _selectedSort = val;
+                                  });
+                                }
+                              },
+                              underline: const SizedBox(),
+                              style: const TextStyle(color: Colors.black, fontSize: 15),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Spacer
+                      Expanded(child: Container()),
+                      // Product count
+                      Text(
+                        '${_sortedProducts.length} products',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            // Sale products grid
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: MediaQuery.of(context).size.width > 800
-                    ? 4
-                    : (MediaQuery.of(context).size.width > 600 ? 2 : 1),
-                crossAxisSpacing: 24,
-                mainAxisSpacing: 32,
-                childAspectRatio: 0.7,
-                children: _sortedProducts.map((product) {
-                  return _SaleHoverableProductCard(
-                    title: product['name']!,
-                    imageUrl: product['image']!,
-                    oldPrice: product['oldPrice']!,
-                    newPrice: product['newPrice']!,
-                    onTap: () {
-                      Navigator.pushNamed(context, product['route']!);
-                    },
-                  );
-                }).toList(),
+                  const SizedBox(height: 24),
+                  // Sale products grid
+                  Expanded(
+                    child: GridView.count(
+                      crossAxisCount: MediaQuery.of(context).size.width > 800
+                          ? 4
+                          : (MediaQuery.of(context).size.width > 600 ? 2 : 1),
+                      crossAxisSpacing: 24,
+                      mainAxisSpacing: 32,
+                      childAspectRatio: 0.7,
+                      children: _sortedProducts.map((product) {
+                        return _SaleHoverableProductCard(
+                          title: product['name']!,
+                          imageUrl: product['image']!,
+                          oldPrice: product['oldPrice']!,
+                          newPrice: product['newPrice']!,
+                          onTap: () {
+                            Navigator.pushNamed(context, product['route']!);
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
+            buildShopFooter(context), // <-- Add footer at end
           ],
         ),
       ),
-      bottomNavigationBar: buildShopFooter(context),
     );
   }
 }
@@ -444,10 +450,10 @@ class _SaleProductDetailPageState extends State<_SaleProductDetailPage> {
     final isWide = MediaQuery.of(context).size.width > 800;
     return Scaffold(
       appBar: buildShopAppBar(context),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
               child: Flex(
                 direction: isWide ? Axis.horizontal : Axis.vertical,
@@ -571,10 +577,10 @@ class _SaleProductDetailPageState extends State<_SaleProductDetailPage> {
                 ],
               ),
             ),
-          );
-        },
+            buildShopFooter(context), // Only here
+          ],
+        ),
       ),
-      bottomNavigationBar: buildShopFooter(context),
     );
   }
 }

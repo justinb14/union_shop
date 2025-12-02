@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildShopFooter(BuildContext context, {VoidCallback? onSearch}) {
+Widget buildShopFooter(BuildContext context) {
   return Material(
     elevation: 8,
     color: Colors.grey[100],
@@ -75,7 +75,7 @@ Widget buildShopFooter(BuildContext context, {VoidCallback? onSearch}) {
                       ),
                       const SizedBox(height: 8),
                       TextButton(
-                        onPressed: onSearch ?? () {},
+                        onPressed: () {},
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           alignment: Alignment.centerLeft,
