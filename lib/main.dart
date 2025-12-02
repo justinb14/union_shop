@@ -13,6 +13,7 @@ import 'footer.dart';
 // Fix: Use relative import for product_card.dart
 import 'product_card.dart';
 import 'cart_model.dart'; // <-- Add this line
+import 'print_shack_page.dart'; // <-- Add this import
 //restored
 
 // --- Common Widgets for AppBar ---
@@ -142,6 +143,11 @@ class _NavBar extends StatelessWidget {
   void _navigate(String route) {
     if (route == '/') {
       Navigator.pushNamedAndRemoveUntil(parentContext, '/', (route) => false);
+    } else if (route == '/print_shack') {
+      Navigator.push(
+        parentContext,
+        MaterialPageRoute(builder: (context) => const PrintShackPage()),
+      );
     } else {
       Navigator.pushNamed(parentContext, route);
     }
@@ -201,6 +207,8 @@ class _NavBar extends StatelessWidget {
                     _navigate('/about');
                   } else if (value == 'personalisation') {
                     _navigate('/personalisation');
+                  } else if (value == 'print_shack') {
+                    _navigate('/print_shack');
                   }
                 },
                 itemBuilder: (context) => [
@@ -211,6 +219,10 @@ class _NavBar extends StatelessWidget {
                   const PopupMenuItem(
                     value: 'personalisation',
                     child: Text('Personalisation'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'print_shack',
+                    child: Text('The Print Shack'),
                   ),
                 ],
                 child: const Text(
@@ -314,7 +326,8 @@ class UnionShopApp extends StatelessWidget {
         '/p_bookmark': (context) => PortsmouthCityBookmarkPage(),
         '/p_notebook': (context) => const PortsmouthCityNotebookPage(),
         '/cart': (context) => CartPage(),
-        '/personalisation': (context) => const PersonalisationPage(), // <-- Add this line
+        '/personalisation': (context) => const PersonalisationPage(),
+        '/print_shack': (context) => const PrintShackPage(), // <-- Add this route
       },
     );
   }
