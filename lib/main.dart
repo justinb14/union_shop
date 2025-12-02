@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
+import 'portsmouth_collection_page.dart';
 
 // --- Common Widgets for AppBar and Footer ---
 PreferredSizeWidget buildShopAppBar(BuildContext context) {
@@ -229,6 +230,10 @@ class UnionShopApp extends StatelessWidget {
         '/essential_tshirt': (context) => EssentialTShirtPage(),
         '/signature_hoodie': (context) => SignatureHoodiePage(),
         '/signature_tshirt': (context) => SignatureTShirtPage(),
+        // --- Add Portsmouth City product routes ---
+        '/p_postcard': (context) => const PortsmouthCityPostcardPage(),
+        '/p_bookmark': (context) => const PortsmouthCityBookmarkPage(),
+        '/p_notebook': (context) => const PortsmouthCityNotebookPage(),
       },
     );
   }
@@ -372,21 +377,27 @@ class HomeScreen extends StatelessWidget {
                           title: 'Portsmouth City Postcard',
                           price: '£6.00',
                           imageUrl: 'assets/images/p_postcard.png',
-                          onTap: () {}, // Add navigation if needed
+                          onTap: () {
+                            Navigator.pushNamed(context, '/p_postcard');
+                          },
                         ),
                         // Portsmouth City Bookmark
                         _HoverableProductCard(
                           title: 'Portsmouth City Bookmark',
                           price: '£4.00',
                           imageUrl: 'assets/images/p_bookmark.png',
-                          onTap: () {}, // Add navigation if needed
+                          onTap: () {
+                            Navigator.pushNamed(context, '/p_bookmark');
+                          },
                         ),
                         // Portsmouth City Notebook
                         _HoverableProductCard(
                           title: 'Portsmouth City Notebook',
                           price: '£4.00',
                           imageUrl: 'assets/images/p_notebook.png',
-                          onTap: () {}, // Add navigation if needed
+                          onTap: () {
+                            Navigator.pushNamed(context, '/p_notebook');
+                          },
                         ),
                       ],
                     ),
@@ -668,60 +679,6 @@ class ProductCard extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class PortsmouthCollectionPage extends StatelessWidget {
-  const PortsmouthCollectionPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final crossCount = MediaQuery.of(context).size.width > 800
-        ? 3
-        : (MediaQuery.of(context).size.width > 600 ? 2 : 1);
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Color(0xFF4d2963)),
-        title: const Text(
-          'Portsmouth City Collection',
-          style: TextStyle(color: Color(0xFF4d2963)),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: GridView.count(
-          crossAxisCount: crossCount,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          children: [
-            // Portsmouth City Postcard
-            _HoverableProductCard(
-              title: 'Portsmouth City Postcard',
-              price: '£6.00',
-              imageUrl: 'assets/images/p_postcard.png',
-              onTap: () {}, // Add navigation if needed
-            ),
-            // Portsmouth City Bookmark
-            _HoverableProductCard(
-              title: 'Portsmouth City Bookmark',
-              price: '£4.00',
-              imageUrl: 'assets/images/p_bookmark.png',
-              onTap: () {}, // Add navigation if needed
-            ),
-            // Portsmouth City Notebook
-            _HoverableProductCard(
-              title: 'Portsmouth City Notebook',
-              price: '£4.00',
-              imageUrl: 'assets/images/p_notebook.png',
-              onTap: () {}, // Add navigation if needed
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -2067,6 +2024,185 @@ class _SignatureTShirtPageState extends State<SignatureTShirtPage> {
         onColorChanged: (val) => setState(() => _selectedColor = val),
         onSizeChanged: (val) => setState(() => _selectedSize = val),
         onQuantityChanged: (val) => setState(() => _quantity = val),
+      ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+// --- Portsmouth City Product Pages ---
+
+class PortsmouthCityPostcardPage extends StatelessWidget {
+  const PortsmouthCityPostcardPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.asset('assets/images/p_postcard.png', fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Portsmouth City Postcard',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'A beautiful Portsmouth City Postcard, perfect for sending or collecting.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                '£6.00',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+class PortsmouthCityBookmarkPage extends StatelessWidget {
+  const PortsmouthCityBookmarkPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.asset('assets/images/p_bookmark.png', fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Portsmouth City Bookmark',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'A stylish Portsmouth City Bookmark for your favourite reads.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                '£4.00',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+class PortsmouthCityNotebookPage extends StatelessWidget {
+  const PortsmouthCityNotebookPage({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 400,
+                child: Image.asset('assets/images/p_notebook.png', fit: BoxFit.contain),
+              ),
+              const SizedBox(height: 32),
+              const Text(
+                'Portsmouth City Notebook',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'A handy Portsmouth City Notebook for your notes and sketches.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                '£4.00',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF4d2963)),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                  child: const Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       bottomNavigationBar: buildShopFooter(context),
     );
