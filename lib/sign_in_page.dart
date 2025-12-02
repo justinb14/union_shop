@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main.dart'; // For buildShopAppBar
+import 'footer.dart'; // For buildShopFooter
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

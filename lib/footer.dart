@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // For HomeScreen
 
 Widget buildShopFooter(BuildContext context) {
   return Container(
@@ -30,12 +29,10 @@ Widget buildShopFooter(BuildContext context) {
         const SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-            Navigator.pushReplacement(
+            Navigator.pushNamedAndRemoveUntil(
               context,
-              PageRouteBuilder(
-                pageBuilder: (c, a1, a2) => const HomeScreen(),
-                transitionDuration: Duration.zero,
-              ),
+              '/',
+              (route) => false,
             );
           },
           child: const Text(

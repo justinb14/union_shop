@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // For buildShopAppBar and _HoverableProductCard
+import 'main.dart'; // For buildShopAppBar
+import 'product_card.dart'; // Import the shared HoverableProductCard
+
 
 class PortsmouthCollectionPage extends StatelessWidget {
   const PortsmouthCollectionPage({super.key});
@@ -19,8 +21,7 @@ class PortsmouthCollectionPage extends StatelessWidget {
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
           children: [
-            // Portsmouth City Postcard
-            _HoverableProductCard(
+            HoverableProductCard(
               title: 'Portsmouth City Postcard',
               price: '£6.00',
               imageUrl: 'assets/images/p_postcard.png',
@@ -28,8 +29,7 @@ class PortsmouthCollectionPage extends StatelessWidget {
                 Navigator.pushNamed(context, '/p_postcard');
               },
             ),
-            // Portsmouth City Bookmark
-            _HoverableProductCard(
+            HoverableProductCard(
               title: 'Portsmouth City Bookmark',
               price: '£4.00',
               imageUrl: 'assets/images/p_bookmark.png',
@@ -37,8 +37,7 @@ class PortsmouthCollectionPage extends StatelessWidget {
                 Navigator.pushNamed(context, '/p_bookmark');
               },
             ),
-            // Portsmouth City Notebook
-            _HoverableProductCard(
+            HoverableProductCard(
               title: 'Portsmouth City Notebook',
               price: '£4.00',
               imageUrl: 'assets/images/p_notebook.png',

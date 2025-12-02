@@ -1,15 +1,25 @@
+import 'cart_page.dart'; // <-- Move this to the very top, before any other project imports
 import 'package:flutter/material.dart';
-import 'package:union_shop/product_page.dart';
-import 'portsmouth_collection_page.dart';
+// Fix: Use relative import for product_page.dart
+import 'product_page.dart';
+// Fix: Use relative import for PortsmouthCollectionPage
+import 'portsmouth_city/portsmouth_collection_page.dart';
+// Fix: Use relative import for sale_page.dart
 import 'sale_page.dart';
+// Fix: Use relative import for sign_in_page.dart
 import 'sign_in_page.dart';
+// Fix: Use relative import for footer.dart
 import 'footer.dart';
+// Fix: Use relative import for product_card.dart
+import 'product_card.dart';
+import 'cart_model.dart'; // <-- Add this line
 
 // --- Common Widgets for AppBar ---
 PreferredSizeWidget buildShopAppBar(BuildContext context) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(86),
     child: Material(
+      color: Colors.white,
       child: Column(
         children: [
           // Top sale banner
@@ -130,17 +140,55 @@ class _NavBar extends StatelessWidget {
                 constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                 onPressed: () {},
               ),
+              // --- Shopping Cart Button (navigates to cart page) ---
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.shopping_cart_outlined, size: 26, color: Colors.black),
+                    padding: const EdgeInsets.all(14),
+                    constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CartPage()),
+                      );
+                    },
+                    tooltip: 'View Cart',
+                  ),
+                  // Cart bubble badge
+                  if (Cart().totalItems > 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 18,
+                          minHeight: 18,
+                        ),
+                        child: Text(
+                          '${Cart().totalItems}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               IconButton(
                 icon: const Icon(Icons.person_outline, size: 26, color: Colors.black),
                 padding: const EdgeInsets.all(14),
                 constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                 onPressed: () => _navigateToSignIn(context),
-              ),
-              IconButton(
-                icon: const Icon(Icons.shopping_bag_outlined, size: 26, color: Colors.black),
-                padding: const EdgeInsets.all(14),
-                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-                onPressed: () {},
               ),
             ],
           ),
@@ -150,61 +198,11 @@ class _NavBar extends StatelessWidget {
   }
 }
 
-Widget buildShopFooter(BuildContext context) {
-  return Container(
-    width: double.infinity,
-    color: Colors.grey[50],
-    padding: const EdgeInsets.all(24),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/facebook_logo.png',
-              width: 38,
-              height: 38,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(width: 16),
-            Image.asset(
-              'assets/images/twitter_logo.png',
-              width: 28,
-              height: 28,
-              fit: BoxFit.contain,
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        GestureDetector(
-          onTap: () {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (c, a1, a2) => const HomeScreen(),
-                transitionDuration: Duration.zero,
-              ),
-            );
-          },
-          child: const Text(
-            '© 2025, upsu-store Powered by Shopify',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              decoration: TextDecoration.none,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
 // --- Main App ---
 void main() {
-  runApp(const UnionShopApp());
+  runApp(
+    const UnionShopApp(),
+  );
 }
 
 class UnionShopApp extends StatelessWidget {
@@ -222,7 +220,7 @@ class UnionShopApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/product': (context) => const ProductPage(),
-        '/portsmouth': (context) => const PortsmouthCollectionPage(),
+        '/portsmouth': (context) => PortsmouthCollectionPage(),
         '/about': (context) => const AboutPage(),
         '/sale': (context) => const SalePage(),
         '/sale_sweatshirt': (context) => const SaleSweatshirtPage(),
@@ -232,10 +230,10 @@ class UnionShopApp extends StatelessWidget {
         '/essential_tshirt': (context) => EssentialTShirtPage(),
         '/signature_hoodie': (context) => SignatureHoodiePage(),
         '/signature_tshirt': (context) => SignatureTShirtPage(),
-        // --- Add Portsmouth City product routes ---
-        '/p_postcard': (context) => const PortsmouthCityPostcardPage(),
-        '/p_bookmark': (context) => const PortsmouthCityBookmarkPage(),
+        '/p_postcard': (context) => PortsmouthCityPostcardPage(),
+        '/p_bookmark': (context) => PortsmouthCityBookmarkPage(),
         '/p_notebook': (context) => const PortsmouthCityNotebookPage(),
+        '/cart': (context) => CartPage(),
       },
     );
   }
@@ -308,13 +306,13 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 48,
                       children: [
                         // Essential Hoodie Card with hover/click
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Essential Hoodie',
                           price: '£29.99',
                           imageUrl: 'assets/images/hoodie_navy.png',
                           onTap: () => navigateToEssentialHoodie(context),
                         ),
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Essential T-Shirt',
                           price: '£6.99',
                           imageUrl: 'assets/images/tee.png',
@@ -340,13 +338,13 @@ class HomeScreen extends StatelessWidget {
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
                       children: [
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Signature Hoodie',
                           price: '£32.99',
                           imageUrl: 'assets/images/hoodie_green.png',
                           onTap: () => navigateToSignatureHoodie(context),
                         ),
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Signature T-Shirt',
                           price: '£9.99',
                           imageUrl: 'assets/images/tee_navy.png',
@@ -375,7 +373,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 24,
                       children: [
                         // Portsmouth City Postcard
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Portsmouth City Postcard',
                           price: '£6.00',
                           imageUrl: 'assets/images/p_postcard.png',
@@ -384,7 +382,7 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                         // Portsmouth City Bookmark
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Portsmouth City Bookmark',
                           price: '£4.00',
                           imageUrl: 'assets/images/p_bookmark.png',
@@ -393,7 +391,7 @@ class HomeScreen extends StatelessWidget {
                           },
                         ),
                         // Portsmouth City Notebook
-                        _HoverableProductCard(
+                        ProductCard(
                           title: 'Portsmouth City Notebook',
                           price: '£4.00',
                           imageUrl: 'assets/images/p_notebook.png',
@@ -500,6 +498,13 @@ class _HeroCarouselState extends State<HeroCarousel> {
   @override
   Widget build(BuildContext context) {
     final slide = _slides[_currentIndex];
+    final imagePath = slide['image']!;
+    Widget imageWidget;
+    if (imagePath.startsWith('assets/')) {
+      imageWidget = Image.asset(imagePath, fit: BoxFit.cover);
+    } else {
+      imageWidget = Image.network(imagePath, fit: BoxFit.cover);
+    }
     return SizedBox(
       height: 400,
       width: double.infinity,
@@ -509,8 +514,11 @@ class _HeroCarouselState extends State<HeroCarousel> {
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
+                // Fix: Use correct image widget for asset or network
                 image: DecorationImage(
-                  image: NetworkImage(slide['image']!),
+                  image: imagePath.startsWith('assets/')
+                      ? AssetImage(imagePath) as ImageProvider
+                      : NetworkImage(imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -629,110 +637,62 @@ class _HeroCarouselState extends State<HeroCarousel> {
   }
 }
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final String title;
   final String price;
   final String imageUrl;
+  final VoidCallback? onTap;
 
   const ProductCard({
     super.key,
     required this.title,
     required this.price,
     required this.imageUrl,
+    this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/product');
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey),
-                  ),
-                );
-              },
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 4),
-              Text(
-                title,
-                style: const TextStyle(fontSize: 14, color: Colors.black),
-                maxLines: 2,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                price,
-                style: const TextStyle(fontSize: 13, color: Colors.grey),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+  State<ProductCard> createState() => _ProductCardState();
 }
 
-// Hoverable Product Card for Essential Hoodie
-class _HoverableProductCard extends StatefulWidget {
-  final String title;
-  final String price;
-  final String imageUrl;
-  final VoidCallback onTap;
-
-  const _HoverableProductCard({
-    required this.title,
-    required this.price,
-    required this.imageUrl,
-    required this.onTap,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<_HoverableProductCard> createState() => _HoverableProductCardState();
-}
-
-class _HoverableProductCardState extends State<_HoverableProductCard> {
-  bool _hovering = false;
+class _ProductCardState extends State<ProductCard> {
+  bool _isHovering = false;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
+      onEnter: (_) => setState(() => _isHovering = true),
+      onExit: (_) => setState(() => _isHovering = false),
       child: GestureDetector(
         onTap: widget.onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Stack(
-                children: [
-                  Image.asset(
-                    widget.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                  if (_hovering)
-                    Positioned.fill(
-                      child: Container(
-                        color: Colors.white.withOpacity(0.25), // subtle white overlay
+              child: ColorFiltered(
+                colorFilter: _isHovering
+                    ? const ColorFilter.matrix(<double>[
+                        // Slightly brighten (+0.08) and slightly desaturate (-0.12)
+                        0.88, 0.06, 0.06, 0, 20, // R
+                        0.06, 0.88, 0.06, 0, 20, // G
+                        0.06, 0.06, 0.88, 0, 20, // B
+                        0,    0,    0,    1, 0,  // A
+                      ])
+                    : const ColorFilter.mode(
+                        Colors.transparent, BlendMode.multiply),
+                child: Image.network(
+                  widget.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: Icon(Icons.image_not_supported, color: Colors.grey),
                       ),
-                    ),
-                ],
+                    );
+                  },
+                ),
               ),
             ),
             Column(
@@ -741,13 +701,7 @@ class _HoverableProductCardState extends State<_HoverableProductCard> {
                 const SizedBox(height: 4),
                 Text(
                   widget.title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    decoration:
-                        _hovering ? TextDecoration.underline : TextDecoration.none,
-                    decorationThickness: 2,
-                  ),
+                  style: const TextStyle(fontSize: 14, color: Colors.black),
                   maxLines: 2,
                 ),
                 const SizedBox(height: 4),
@@ -776,6 +730,13 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
   String _selectedColor = 'Navy';
   String _selectedSize = 'M';
   int _quantity = 1;
+  final TextEditingController _quantityController = TextEditingController(text: '1');
+
+  @override
+  void dispose() {
+    _quantityController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -925,6 +886,7 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
                             SizedBox(
                               width: 60,
                               child: TextField(
+                                controller: _quantityController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   border: OutlineInputBorder(),
@@ -932,8 +894,6 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 8),
                                 ),
-                                controller: TextEditingController(
-                                    text: _quantity.toString()),
                                 onChanged: (val) {
                                   final n = int.tryParse(val);
                                   if (n != null && n > 0) {
@@ -955,7 +915,17 @@ class _EssentialHoodiePageState extends State<EssentialHoodiePage> {
                         ),
                         const SizedBox(height: 24),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Cart().addItem(CartItem(
+                              title: 'Essential Hoodie',
+                              imageUrl: hoodieImage,
+                              price: 29.99,
+                              quantity: _quantity,
+                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Added to cart!')),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
                             foregroundColor: Colors.white,
@@ -1057,6 +1027,7 @@ class ProductDetailBody extends StatelessWidget {
   final ValueChanged<String> onColorChanged;
   final ValueChanged<String> onSizeChanged;
   final ValueChanged<int> onQuantityChanged;
+  final VoidCallback? onAddToCart; // Add this line
 
   const ProductDetailBody({
     super.key,
@@ -1072,11 +1043,14 @@ class ProductDetailBody extends StatelessWidget {
     required this.onColorChanged,
     required this.onSizeChanged,
     required this.onQuantityChanged,
+    this.onAddToCart,
   });
 
   @override
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width > 800;
+    // Fix: Use a local TextEditingController to avoid creating a new one every build
+    final quantityController = TextEditingController(text: quantity.toString());
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
@@ -1176,7 +1150,7 @@ class ProductDetailBody extends StatelessWidget {
                                 isDense: true,
                                 contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                               ),
-                              controller: TextEditingController(text: quantity.toString()),
+                              controller: quantityController,
                               onChanged: (val) {
                                 final n = int.tryParse(val);
                                 if (n != null && n > 0) onQuantityChanged(n);
@@ -1196,7 +1170,7 @@ class ProductDetailBody extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: onAddToCart ?? () {},
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF4d2963),
                           foregroundColor: Colors.white,
@@ -1255,6 +1229,17 @@ class _EssentialTShirtPageState extends State<EssentialTShirtPage> {
         onColorChanged: (val) => setState(() => _selectedColor = val),
         onSizeChanged: (val) => setState(() => _selectedSize = val),
         onQuantityChanged: (val) => setState(() => _quantity = val),
+        onAddToCart: () {
+          Cart().addItem(CartItem(
+            title: 'Essential T-Shirt',
+            imageUrl: 'assets/images/tee.png',
+            price: 6.99,
+            quantity: _quantity,
+          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Added to cart!')),
+          );
+        },
       ),
       bottomNavigationBar: buildShopFooter(context),
     );
@@ -1290,6 +1275,17 @@ class _SignatureHoodiePageState extends State<SignatureHoodiePage> {
         onColorChanged: (val) => setState(() => _selectedColor = val),
         onSizeChanged: (val) => setState(() => _selectedSize = val),
         onQuantityChanged: (val) => setState(() => _quantity = val),
+        onAddToCart: () {
+          Cart().addItem(CartItem(
+            title: 'Signature Hoodie',
+            imageUrl: 'assets/images/hoodie_green.png',
+            price: 32.99,
+            quantity: _quantity,
+          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Added to cart!')),
+          );
+        },
       ),
       bottomNavigationBar: buildShopFooter(context),
     );
@@ -1325,6 +1321,17 @@ class _SignatureTShirtPageState extends State<SignatureTShirtPage> {
         onColorChanged: (val) => setState(() => _selectedColor = val),
         onSizeChanged: (val) => setState(() => _selectedSize = val),
         onQuantityChanged: (val) => setState(() => _quantity = val),
+        onAddToCart: () {
+          Cart().addItem(CartItem(
+            title: 'Signature T-Shirt',
+            imageUrl: 'assets/images/tee_navy.png',
+            price: 9.99,
+            quantity: _quantity,
+          ));
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Added to cart!')),
+          );
+        },
       ),
       bottomNavigationBar: buildShopFooter(context),
     );
@@ -1371,7 +1378,17 @@ class PortsmouthCityPostcardPage extends StatelessWidget {
                 width: 200,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Cart().addItem(CartItem(
+                      title: 'Portsmouth City Postcard',
+                      imageUrl: 'assets/images/p_postcard.png',
+                      price: 6.00,
+                      quantity: 1,
+                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart!')),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4d2963),
                     foregroundColor: Colors.white,
@@ -1430,7 +1447,17 @@ class PortsmouthCityBookmarkPage extends StatelessWidget {
                 width: 200,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Cart().addItem(CartItem(
+                      title: 'Portsmouth City Bookmark',
+                      imageUrl: 'assets/images/p_bookmark.png',
+                      price: 4.00,
+                      quantity: 1,
+                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart!')),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4d2963),
                     foregroundColor: Colors.white,
@@ -1489,7 +1516,17 @@ class PortsmouthCityNotebookPage extends StatelessWidget {
                 width: 200,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Cart().addItem(CartItem(
+                      title: 'Portsmouth City Notebook',
+                      imageUrl: 'assets/images/p_notebook.png',
+                      price: 4.00,
+                      quantity: 1,
+                    ));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Added to cart!')),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4d2963),
                     foregroundColor: Colors.white,
@@ -1505,6 +1542,17 @@ class PortsmouthCityNotebookPage extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+class PortsmouthCollectionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: const Center(child: Text('Portsmouth Collection Page Placeholder')),
       bottomNavigationBar: buildShopFooter(context),
     );
   }

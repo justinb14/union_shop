@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../main.dart'; // For buildShopAppBar and buildShopFooter
+import 'main.dart'; // For buildShopAppBar
+import 'footer.dart'; // For buildShopFooter
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

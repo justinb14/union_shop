@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // For buildShopAppBar, buildShopFooter, _SaleHoverableProductCard, etc.
+import 'main.dart'; // For buildShopAppBar
+import 'footer.dart'; // For buildShopFooter
 
 // --- Sale Page and Related Widgets ---
 class SalePage extends StatefulWidget {
@@ -367,7 +368,6 @@ class SaleSweatshirtPage extends StatelessWidget {
       oldPrice: '£28.00',
       newPrice: '£21.99',
       description: 'Our classic Essential Sweatshirt, now at a special sale price!',
-    );
   }
 }
 
