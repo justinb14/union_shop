@@ -203,7 +203,10 @@ class _NavBar extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const PrintShackWhoAreWePage()),
                     );
                   } else if (value == 'personalisation') {
-                    _navigate('/personalisation');
+                    Navigator.push(
+                      parentContext,
+                      MaterialPageRoute(builder: (context) => const PrintShackPersonalisationPage()),
+                    );
                   }
                 },
                 itemBuilder: (context) => [
@@ -1726,6 +1729,22 @@ class PrintShackWhoAreWePage extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 24),
+              // --- Add images below title ---
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/print_shack_hoodie.png',
+                    height: 120,
+                  ),
+                  const SizedBox(width: 32),
+                  Image.asset(
+                    'assets/images/union_logo.png',
+                    height: 120,
+                  ),
+                ],
+              ),
               const SizedBox(height: 32),
               const Text(
                 "Make It Yours at The Union Print Shack\n"
@@ -1746,6 +1765,214 @@ class PrintShackWhoAreWePage extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
             ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+class PrintShackPersonalisationPage extends StatefulWidget {
+  const PrintShackPersonalisationPage({super.key});
+
+  @override
+  State<PrintShackPersonalisationPage> createState() => _PrintShackPersonalisationPageState();
+}
+
+class _PrintShackPersonalisationPageState extends State<PrintShackPersonalisationPage> {
+  String _selectedOption = 'One line of text';
+  double _price = 3.0;
+  int _quantity = 1;
+  final TextEditingController _personalisationController1 = TextEditingController();
+  final TextEditingController _personalisationController2 = TextEditingController();
+  final TextEditingController _personalisationController3 = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController(text: '1');
+
+  @override
+  void dispose() {
+    _personalisationController1.dispose();
+    _personalisationController2.dispose();
+    _personalisationController3.dispose();
+    _quantityController.dispose();
+    super.dispose();
+  }
+
+  void _updatePrice(String option) {
+    setState(() {
+      _selectedOption = option;
+      if (option == 'One line of text') {
+        _price = 3.0;
+      } else if (option == 'Two lines of Text') {
+        _price = 5.0;
+      } else if (option == 'Three lines of text') {
+        _price = 7.5;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isWide = MediaQuery.of(context).size.width > 800;
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 32),
+            child: Flex(
+              direction: isWide ? Axis.horizontal : Axis.vertical,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Image on left
+                SizedBox(
+                  width: isWide ? 320 : double.infinity,
+                  height: isWide ? 320 : 180,
+                  child: Image.asset(
+                    'assets/images/print_shack_hoodie.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                SizedBox(width: isWide ? 48 : 0, height: isWide ? 0 : 32),
+                // Content on right
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Personalisation',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        '£${_price.toStringAsFixed(_price == _price.roundToDouble() ? 0 : 2)}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF4d2963),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      DropdownButtonFormField<String>(
+                        value: _selectedOption,
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'One line of text',
+                            child: Text('One line of text'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Two lines of Text',
+                            child: Text('Two lines of Text'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Three lines of text',
+                            child: Text('Three lines of text'),
+                          ),
+                        ],
+                        onChanged: (val) {
+                          if (val != null) _updatePrice(val);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Personalisation Type',
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(4)),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      // First line textbox (always shown)
+                      TextField(
+                        controller: _personalisationController1,
+                        decoration: const InputDecoration(
+                          labelText: 'Personalisation Line 1',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        ),
+                      ),
+                      // Second line textbox (shown for two/three lines)
+                      if (_selectedOption == 'Two lines of Text' || _selectedOption == 'Three lines of text') ...[
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: _personalisationController2,
+                          decoration: const InputDecoration(
+                            labelText: 'Personalisation Line 2',
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          ),
+                        ),
+                      ],
+                      // Third line textbox (shown for three lines)
+                      if (_selectedOption == 'Three lines of text') ...[
+                        const SizedBox(height: 16),
+                        TextField(
+                          controller: _personalisationController3,
+                          decoration: const InputDecoration(
+                            labelText: 'Personalisation Line 3',
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                          ),
+                        ),
+                      ],
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          const Text(
+                            'Quantity',
+                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
+                          const SizedBox(width: 16),
+                          SizedBox(
+                            width: 60,
+                            child: TextField(
+                              controller: _quantityController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                              ),
+                              onChanged: (val) {
+                                final n = int.tryParse(val);
+                                if (n != null && n > 0) {
+                                  setState(() => _quantity = n);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      ElevatedButton(
+                        onPressed: () {
+                          Cart().addItem(CartItem(
+                            title: 'Personalisation (${_selectedOption})',
+                            imageUrl: 'assets/images/print_shack_hoodie.png',
+                            price: _price,
+                            quantity: _quantity,
+                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Added to cart!')),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF4d2963),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                        ),
+                        child: const Text(
+                          'Add to Cart',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
