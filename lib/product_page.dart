@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'footer.dart';
 import 'product_card.dart';
+import 'cart_model.dart';
 import 'main.dart'; // for buildShopAppBar
 
 class ProductPage extends StatelessWidget {
