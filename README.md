@@ -23,3 +23,4 @@ The union shop website is designed to be a replication the existing UPSU website
 - **Search System**: Functionijng search system so users can search for a product via tapping the magnifying glass symbol and searching 
 - **Add items to cart**: Users can now add items to the cart, which can be viewed by pressing the cart sumbol in the top right of the nav bar. This shows the user the total price, contents and quantity of said contents. 
 - **Print Shack**: A working print shack area which can be accessed by pressing its button in the nav bar has been added, users can make use of the dropdown and clicking either about or personalisation will take users to its relevant sectors which also function as intended 
+- **Cart Management**: Full cart management implemented, including quantity editing, removal of specific items in cart and price calculations, full functionality achieved. 
