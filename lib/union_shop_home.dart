@@ -245,15 +245,14 @@ class _HeroCarouselState extends State<HeroCarousel> {
       'subtitle': 'Discover our premium Signature Range products.',
     },
     {
-      // Update title and subtitle for The Print Shack
-      'image':
-          'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+      // Update image to print_shack_hoodie.png
+      'image': 'assets/images/print_shack_hoodie.png',
       'title': 'The Print Shack',
       'subtitle': "Let's create something uniquely you with our personalisation service - From £3 for one line of text!",
     },
     {
-      'image':
-          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+      // Change image to local stationary.png asset
+      'image': 'assets/images/stationary.png',
       'title': 'Student Essentials',
       'subtitle': 'Everything you need for your student life.',
     },
@@ -343,7 +342,14 @@ class _HeroCarouselState extends State<HeroCarousel> {
                 SizedBox(
                   height: 52,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_currentIndex == 2) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const PrintShackPersonalisationPage()),
+                        );
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF4d2963),
                       foregroundColor: Colors.white,
