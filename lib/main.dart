@@ -18,6 +18,7 @@ import 'cart_model.dart'; // <-- Add this line
 import 'personalisation_page.dart'; // Add this import
 import 'about_page.dart'; // Add this import
 import 'terms_page.dart'; // Add this import
+import 'collections_page.dart'; // Add this import
 //restored
 import 'essential_tshirt_page.dart';
 import 'signature_hoodie_page.dart';
@@ -372,6 +373,7 @@ class UnionShopApp extends StatelessWidget {
         '/cart': (context) => CartPage(),
         '/personalisation': (context) =>  PersonalisationPage(), // <-- Add this line
         '/terms': (context) => const TermsPage(), // Add this line
+        '/collections': (context) => const CollectionsPage(), // Add this line
       },
     );
   }

@@ -11,6 +11,7 @@ import 'main.dart'; // Add this import for buildShopAppBar
 import 'portsmouth_city_postcard_page.dart'; // Add this import
 import 'portsmouth_city_bookmark_page.dart'; // Add this import
 import 'portsmouth_city_notebook_page.dart'; // Add this import
+import 'collections_page.dart'; // Add this import at the top
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -253,7 +254,7 @@ class _HeroCarouselState extends State<HeroCarousel> {
     {
       // Change image to local stationary.png asset
       'image': 'assets/images/stationary.png',
-      'title': 'Student Essentials',
+      'title': 'Collections', // Changed from 'Student Essentials'
       'subtitle': 'Everything you need for your student life.',
     },
   ];
@@ -347,6 +348,11 @@ class _HeroCarouselState extends State<HeroCarousel> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const PrintShackPersonalisationPage()),
+                        );
+                      } else if (_currentIndex == 3) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CollectionsPage()), // Now works because of import
                         );
                       }
                     },
