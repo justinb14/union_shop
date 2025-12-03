@@ -197,9 +197,48 @@ class _NavBar extends StatelessWidget {
                 child: const Text('Home', style: TextStyle(color: Colors.black)),
               ),
               const SizedBox(width: 12),
-              TextButton(
-                onPressed: () => _navigate('/product'),
-                child: const Text('Shop', style: TextStyle(color: Colors.black)),
+              // --- Shop Dropdown Button ---
+              PopupMenuButton<String>(
+                onSelected: (value) {
+                  // No navigation needed, just show the dropdown
+                },
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'clothing',
+                    child: Text('Clothing'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'merch',
+                    child: Text('Merchandise'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'sig_ess',
+                    child: Text('Signature & Essential Range'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'portsmouth',
+                    child: Text('Portsmouth City Collection'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'pride',
+                    child: Text('Pride Collection'),
+                  ),
+                  const PopupMenuItem(
+                    value: 'graduation',
+                    child: Text('Graduation'),
+                  ),
+                ],
+                child: const Text(
+                  'Shop',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+                offset: const Offset(0, 40),
+                color: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
               ),
               const SizedBox(width: 12),
               // --- Replace 'The Print Shack' TextButton with PopupMenuButton ---
