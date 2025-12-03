@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class CartItem {
   final String title;
   final String imageUrl;
@@ -12,7 +14,7 @@ class CartItem {
   });
 }
 
-class Cart {
+class Cart extends ChangeNotifier {
   static final Cart _instance = Cart._internal();
   factory Cart() => _instance;
   Cart._internal();
@@ -28,6 +30,7 @@ class Cart {
     } else {
       _items.add(item);
     }
+    notifyListeners();
   }
 
   void removeItem(CartItem item) {

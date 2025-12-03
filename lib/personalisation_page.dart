@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'footer.dart';
 import 'cart_model.dart';
+import 'union_shop_home.dart';
+import 'main.dart'; // Add this import for buildShopAppBar
 
 class PersonalisationPage extends StatelessWidget {
   const PersonalisationPage({super.key});

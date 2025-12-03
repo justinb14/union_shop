@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'footer.dart';
 import 'product_card.dart';
 import 'cart_model.dart';
+import 'essential_tshirt_page.dart'; 
+import 'signature_hoodie_page.dart'; 
+import 'signature_tshirt_page.dart';
+import 'essential_hoodie_page.dart'; // Add this import
+import 'personalisation_page.dart'; // For buildShopAppBar and personalisation pages
+import 'main.dart'; // Add this import for buildShopAppBar
+import 'portsmouth_city_postcard_page.dart'; // Add this import
+import 'portsmouth_city_bookmark_page.dart'; // Add this import
+import 'portsmouth_city_notebook_page.dart'; // Add this import
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   void navigateToEssentialHoodie(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const EssentialHoodiePage()),
+      MaterialPageRoute(builder: (context) =>  EssentialHoodiePage()),
     );
   }
 
@@ -141,7 +150,10 @@ class HomeScreen extends StatelessWidget {
                           price: '£6.00',
                           imageUrl: 'assets/images/p_postcard.png',
                           onTap: () {
-                            Navigator.pushNamed(context, '/p_postcard');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PortsmouthCityPostcardPage()),
+                            );
                           },
                         ),
                         // Portsmouth City Bookmark
@@ -150,7 +162,10 @@ class HomeScreen extends StatelessWidget {
                           price: '£4.00',
                           imageUrl: 'assets/images/p_bookmark.png',
                           onTap: () {
-                            Navigator.pushNamed(context, '/p_bookmark');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PortsmouthCityBookmarkPage()),
+                            );
                           },
                         ),
                         // Portsmouth City Notebook
@@ -159,7 +174,10 @@ class HomeScreen extends StatelessWidget {
                           price: '£4.00',
                           imageUrl: 'assets/images/p_notebook.png',
                           onTap: () {
-                            Navigator.pushNamed(context, '/p_notebook');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PortsmouthCityNotebookPage()),
+                            );
                           },
                         ),
                       ],

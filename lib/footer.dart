@@ -84,13 +84,13 @@ Widget buildShopFooter(BuildContext context, {VoidCallback? onSearch}) {
                         child: const Text("Search"),
                       ),
                       TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.centerLeft,
-                          foregroundColor: Colors.black87,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/terms');
+                        },
+                        child: const Text(
+                          'Terms and Conditions of Sale Policy',
+                          style: TextStyle(color: Colors.black),
                         ),
-                        child: const Text("Terms & Conditions of Sale Policy"),
                       ),
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'cart_page.dart'; // <-- Move this to the very top, before any other project imports
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // Fix: Use relative import for product_page.dart
 import 'product_page.dart';
 import 'union_shop_home.dart'; // <-- Add this import for HomeScreen
@@ -14,7 +15,13 @@ import 'footer.dart';
 // Fix: Use relative import for product_card.dart
 import 'product_card.dart';
 import 'cart_model.dart'; // <-- Add this line
+import 'personalisation_page.dart'; // Add this import
+import 'about_page.dart'; // Add this import
+import 'terms_page.dart'; // Add this import
 //restored
+import 'essential_tshirt_page.dart';
+import 'signature_hoodie_page.dart';
+import 'signature_tshirt_page.dart';
 
 // --- Common Widgets for AppBar ---
 PreferredSizeWidget buildShopAppBar(BuildContext context) {
@@ -201,12 +208,12 @@ class _NavBar extends StatelessWidget {
                   if (value == 'who') {
                     Navigator.push(
                       parentContext,
-                      MaterialPageRoute(builder: (context) => const PrintShackWhoAreWePage()),
+                      MaterialPageRoute(builder: (context) =>  PrintShackWhoAreWePage()),
                     );
                   } else if (value == 'personalisation') {
                     Navigator.push(
                       parentContext,
-                      MaterialPageRoute(builder: (context) => const PrintShackPersonalisationPage()),
+                      MaterialPageRoute(builder: (context) =>  PrintShackPersonalisationPage()),
                     );
                   }
                 },
@@ -288,7 +295,10 @@ class _NavBar extends StatelessWidget {
 // --- Main App ---
 void main() {
   runApp(
-    const UnionShopApp(),
+    ChangeNotifierProvider(
+      create: (_) => Cart(),
+      child: const UnionShopApp(),
+    ),
   );
 }
 
@@ -308,7 +318,7 @@ class UnionShopApp extends StatelessWidget {
       routes: {
         '/product': (context) => const ProductPage(), // ProductPage now imported from product_page.dart
         '/portsmouth': (context) => PortsmouthCollectionPage(),
-        '/about': (context) => const AboutPage(),
+        '/about': (context) =>  AboutPage(),
         '/sale': (context) => const SalePage(),
         '/sale_sweatshirt': (context) => const SaleSweatshirtPage(),
         '/sale_notebook': (context) => const SaleNotebookPage(),
@@ -321,7 +331,8 @@ class UnionShopApp extends StatelessWidget {
         '/p_bookmark': (context) => PortsmouthCityBookmarkPage(),
         '/p_notebook': (context) => const PortsmouthCityNotebookPage(),
         '/cart': (context) => CartPage(),
-        '/personalisation': (context) => const PersonalisationPage(), // <-- Add this line
+        '/personalisation': (context) =>  PersonalisationPage(), // <-- Add this line
+        '/terms': (context) => const TermsPage(), // Add this line
       },
     );
   }
