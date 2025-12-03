@@ -81,6 +81,27 @@ class PortsmouthCollectionPage extends StatelessWidget {
                 ),
               ),
             ),
+            // Magnet
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PortsmouthCityMagnetPage()),
+                );
+              },
+              child: Card(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/images/p_magnet.png', height: 120, fit: BoxFit.contain),
+                    const SizedBox(height: 16),
+                    const Text('Portsmouth City Magnet', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    const Text('£3.00', style: TextStyle(fontSize: 16, color: Color(0xFF4d2963))),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -360,6 +381,102 @@ class _PortsmouthCityNotebookPageState extends State<PortsmouthCityNotebookPage>
                   ));
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Added $_quantity Portsmouth City Notebook to cart!')),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4d2963),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                ),
+                child: const Text('Add to Cart', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: buildShopFooter(context),
+    );
+  }
+}
+
+class PortsmouthCityMagnetPage extends StatefulWidget {
+  const PortsmouthCityMagnetPage({super.key});
+
+  @override
+  State<PortsmouthCityMagnetPage> createState() => _PortsmouthCityMagnetPageState();
+}
+
+class _PortsmouthCityMagnetPageState extends State<PortsmouthCityMagnetPage> {
+  int _quantity = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildShopAppBar(context),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Portsmouth City Magnet',
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: Image.asset(
+                'assets/images/p_magnet.png',
+                height: 220,
+                fit: BoxFit.contain,
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              '£3.00',
+              style: TextStyle(fontSize: 22, color: Color(0xFF4d2963), fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'A stylish Portsmouth City Magnet for your fridge or collection.',
+              style: TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                const Text('Quantity', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                const SizedBox(width: 16),
+                SizedBox(
+                  width: 60,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    ),
+                    controller: TextEditingController(text: _quantity.toString()),
+                    onChanged: (val) {
+                      final n = int.tryParse(val);
+                      if (n != null && n > 0) setState(() => _quantity = n);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Cart().addItem(CartItem(
+                    title: 'Portsmouth City Magnet',
+                    imageUrl: 'assets/images/p_magnet.png',
+                    price: 3.00,
+                    quantity: _quantity,
+                  ));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Added $_quantity Portsmouth City Magnet to cart!')),
                   );
                 },
                 style: ElevatedButton.styleFrom(

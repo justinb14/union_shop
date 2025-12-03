@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart'; // For buildShopAppBar
 import 'footer.dart'; // For buildShopFooter
+import 'cart_model.dart';
 
 // --- Sale Page and Related Widgets ---
 class SalePage extends StatefulWidget {
@@ -312,8 +313,15 @@ class _SaleHoverableProductCardState extends State<_SaleHoverableProductCard> {
             Expanded(
               child: ColorFiltered(
                 colorFilter: _hovering
-                    ? const ColorFilter.mode(Colors.transparent, BlendMode.saturation)
-                    : const ColorFilter.mode(Colors.grey, BlendMode.saturation),
+                    ? const ColorFilter.matrix(<double>[
+                        // Slightly brighten (+0.08) and slightly desaturate (-0.12)
+                        0.88, 0.06, 0.06, 0, 20, // R
+                        0.06, 0.88, 0.06, 0, 20, // G
+                        0.06, 0.06, 0.88, 0, 20, // B
+                        0, 0, 0, 1, 0, // A
+                      ])
+                    : const ColorFilter.mode(
+                        Colors.transparent, BlendMode.multiply),
                 child: Image.asset(
                   widget.imageUrl,
                   fit: BoxFit.cover,
@@ -544,7 +552,17 @@ class _SaleProductDetailPageState extends State<_SaleProductDetailPage> {
                         ),
                         const SizedBox(height: 32),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Cart().addItem(CartItem(
+                              title: widget.title,
+                              imageUrl: widget.image,
+                              price: double.tryParse(widget.newPrice.replaceAll('£', '')) ?? 0.0,
+                              quantity: _quantity,
+                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Added $_quantity ${widget.title} to cart!')),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
                             foregroundColor: Colors.white,
