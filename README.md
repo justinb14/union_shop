@@ -25,3 +25,4 @@ The union shop website is designed to be a replication the existing UPSU website
 - **Print Shack**: A working print shack area which can be accessed by pressing its button in the nav bar has been added, users can make use of the dropdown and clicking either about or personalisation will take users to its relevant sectors which also function as intended 
 - **Cart Management**: Full cart management implemented, including quantity editing, removal of specific items in cart and price calculations, full functionality achieved. 
 - **Testing**: Tests for relevant features have been implemented under the test file 
+- **Collections Page**: Users can view all collections in the site by pressing browse products in the fourth section of the hero section.
