@@ -239,16 +239,17 @@ class _HeroCarouselState extends State<HeroCarousel> {
           'Over 20% off our Essential Range. Come and grab yours while stock lasts!',
     },
     {
-      'image':
-          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+      // Change to local hoodie_green.png asset
+      'image': 'assets/images/hoodie_green.png',
       'title': 'Signature Range',
       'subtitle': 'Discover our premium Signature Range products.',
     },
     {
+      // Update title and subtitle for The Print Shack
       'image':
           'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
-      'title': 'Portsmouth City Collection',
-      'subtitle': 'Explore the Portsmouth City Collection today.',
+      'title': 'The Print Shack',
+      'subtitle': "Let's create something uniquely you with our personalisation service - From £3 for one line of text!",
     },
     {
       'image':
