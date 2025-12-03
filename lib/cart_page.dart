@@ -43,7 +43,43 @@ class CartPage extends StatelessWidget {
                             ? Image.asset(item.imageUrl, width: 56, height: 56, fit: BoxFit.cover)
                             : Image.network(item.imageUrl, width: 56, height: 56, fit: BoxFit.cover),
                         title: Text(item.title, style: const TextStyle(fontSize: 18)),
-                        subtitle: Text('£${item.price.toStringAsFixed(2)} x ${item.quantity}'),
+                        subtitle: Row(
+                          children: [
+                            Text('£${item.price.toStringAsFixed(2)}'),
+                            const SizedBox(width: 12),
+                            // Quantity editor
+                            SizedBox(
+                              width: 60,
+                              child: TextField(
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                ),
+                                controller: TextEditingController(text: item.quantity.toString()),
+                                onChanged: (val) {
+                                  final n = int.tryParse(val);
+                                  if (n != null && n > 0) {
+                                    // Update quantity in cart
+                                    item.quantity = n;
+                                    Provider.of<Cart>(context, listen: false).notifyListeners();
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            // Remove button
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              tooltip: 'Remove',
+                              onPressed: () {
+                                Provider.of<Cart>(context, listen: false).removeItem(item);
+                                Provider.of<Cart>(context, listen: false).notifyListeners();
+                              },
+                            ),
+                          ],
+                        ),
                         trailing: Text(
                           '£${(item.price * item.quantity).toStringAsFixed(2)}',
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),

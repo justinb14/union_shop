@@ -243,7 +243,8 @@ class _SalePageState extends State<SalePage> {
               ),
               const SizedBox(height: 24),
               // Sale products grid
-              Expanded(
+              SizedBox(
+                height: 600,
                 child: GridView.count(
                   crossAxisCount: MediaQuery.of(context).size.width > 800
                       ? 4

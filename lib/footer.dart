@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart'; // Add this import for showProductSearchDialog
 
 Widget buildShopFooter(BuildContext context, {VoidCallback? onSearch}) {
   return Material(
@@ -75,7 +76,9 @@ Widget buildShopFooter(BuildContext context, {VoidCallback? onSearch}) {
                       ),
                       const SizedBox(height: 8),
                       TextButton(
-                        onPressed: onSearch ?? () {},
+                        onPressed: () {
+                          showProductSearchDialog(context);
+                        },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
                           alignment: Alignment.centerLeft,
